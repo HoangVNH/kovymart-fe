@@ -1,9 +1,12 @@
-import { Button } from 'antd';
+import React from 'react';
+import MainLayout from "./components/MainLayout";
+import './assets/css/index.css';
+import './assets/scss/index.scss';
 
 function App() {
   return (
-    <div className="App">
-      <Button type="primary">Button</Button>
+    <div className="app">
+      <MainLayout />
     </div>
   );
 }
