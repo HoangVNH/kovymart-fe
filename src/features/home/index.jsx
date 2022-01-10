@@ -1,7 +1,4 @@
-import {
-  getCategoryList,
-  selectCategories,
-} from "../../features/category/categorySlice";
+import { selectCategories } from "../../features/category/categorySlice";
 import {
   getProductsByCategoryId,
   selectProduct,
@@ -10,8 +7,12 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ProductCardList from "../../components/ProductCardList";
 import "./styles.scss";
-import { Row, Col } from "antd";
 import CircleCategory from "../../components/CircleCategory";
+import { Pagination } from 'swiper';
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/scss/grid";
+import "swiper/scss/pagination";
+import "swiper/scss/navigation";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -28,21 +29,32 @@ const HomePage = () => {
 
   const renderCategoriesBlock = (categories) =>
     shouldRenderCategories(categories) && (
-      <Row className="category-list__wrapper">
-        {categories.map((category) => (
-          <Col
-            span={4}
-            className="category-list__item-wrapper"
-            key={category.id}
-          >
-            <CircleCategory
-              id={category.id}
-              name={category.name}
-              image={category.image}
-            />
-          </Col>
-        ))}
-      </Row>
+      <div className="category-list__wrapper">
+        <div className="category-title">
+          Danh mục sản phẩm
+        </div>
+        <Swiper
+          modules={[Pagination]}
+          pagination={{
+            clickable: true
+          }}
+          slidesPerView={6}
+          onSlideChange={() => console.log('slide change')}
+          onSwiper={(swiper) => console.log(swiper)}
+        >
+          {categories.map((category) => (
+            <SwiperSlide key={category.id} className="category-list__item-wrapper">
+            
+              <CircleCategory
+                id={category.id}
+                name={category.name}
+                image={category.image}
+              />
+            </SwiperSlide>
+            
+          ))}
+        </Swiper>
+      </div>
     );
 
   // useEffect(() => {
@@ -63,7 +75,9 @@ const HomePage = () => {
 
   return (
     <>
-      { renderCategoriesBlock(categories)
+      { 
+      renderCategoriesBlock(categories)
+      
       // <ProductCardList
       //   products={productList1.slice(0, 4)}
       //   title="Rau - Củ - Trái cây"

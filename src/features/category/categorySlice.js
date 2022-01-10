@@ -19,8 +19,17 @@ const initialState = {
   },
   categories: [
     {
+      id: 0,
+      name: "Giảm đến 25%",
+      description: "",
+      image: "https://image.cooky.vn/ads/s320/f8b2fae1-59a8-4ee3-b3c7-ffa2e0d47570.png",
+      isDelete: false,
+      createdAt: "2021-08-11T00:10:09.199Z",
+      updatedAt: "2021-08-11T00:10:09.199Z"
+    },
+    {
       id: 1,
-      name: "Rau Củ - Trái Cây",
+      name: "Rau Củ",
       description: "",
       image: "https://image.cooky.vn/ads/s320/39d51e75-05cd-4c5b-a3a0-082bdae74b63.png",
       isDelete: false,
@@ -29,6 +38,15 @@ const initialState = {
     },
     {
       id: 2,
+      name: "Trái Cây",
+      description: "",
+      image: "https://image.cooky.vn/ads/s320/39d51e75-05cd-4c5b-a3a0-082bdae74b63.png",
+      isDelete: false,
+      createdAt: "2021-08-11T00:10:09.199Z",
+      updatedAt: "2021-08-11T00:10:09.199Z"
+    },
+    {
+      id: 3,
       name: "Thịt - Hải sản - Trứng",
       description: "",
       image: "https://image.cooky.vn/ads/s320/e7728abb-2f5c-4e3e-8a7e-ee8d9bfab13a.png",
@@ -37,7 +55,7 @@ const initialState = {
       updatedAt: "2021-08-11T00:10:26.629Z"
     },
     {
-      id: 3,
+      id: 4,
       name: "Gia Vị",
       description: "",
       image: "https://image.cooky.vn/ads/s320/1459e7e9-0d7f-4812-a74b-edebc92d9950.jpeg",
@@ -46,7 +64,7 @@ const initialState = {
       updatedAt: "2021-08-11T00:10:38.438Z"
     },
     {
-      id: 4,
+      id: 5,
       name: "Đồ Tươi",
       description: "",
       image: "https://image.cooky.vn/ads/s320/7a9252a4-ac13-437f-9ec5-7321963ef691.png",
@@ -55,7 +73,7 @@ const initialState = {
       updatedAt: "2021-08-11T00:10:45.096Z"
     },
     {
-      id: 5,
+      id: 6,
       name: "Sữa",
       description: "",
       image: "https://image.cooky.vn/ads/s320/26d4fb05-a828-4292-a8b4-4e7a10e3722d.png",
@@ -64,7 +82,7 @@ const initialState = {
       updatedAt: "2021-08-11T00:10:52.148Z"
     },
     {
-      id: 6,
+      id: 7,
       name: "Đồ uống",
       description: "",
       image: "https://image.cooky.vn/ads/s320/ac8d4890-4838-429f-8b9e-a8532a1df6cb.png",
@@ -73,7 +91,7 @@ const initialState = {
       updatedAt: "2021-08-11T00:10:58.533Z"
     },
     {
-      id: 7,
+      id: 8,
       name: "Bánh Kẹo",
       description: "",
       image: "https://image.cooky.vn/ads/s320/8a2bac80-036d-4e0c-914d-17ac130c50ec.png",
@@ -82,10 +100,19 @@ const initialState = {
       updatedAt: "2021-08-11T00:11:05.429Z"
     },
     {
-      id: 8,
+      id: 9,
       name: "Hóa Phẩm",
-      description: "  ",
+      description: "",
       image: "https://image.cooky.vn/ads/s320/c74c6a42-95cd-4c5e-9632-c9a29b8f9c3d.png",
+      isDelete: false,
+      createdAt: "2021-08-11T00:11:12.334Z",
+      updatedAt: "2021-08-11T00:11:12.334Z"
+    },
+    {
+      id: 10,
+      name: "Lương thực",
+      description: "",
+      image: "https://image.cooky.vn/ads/s320/5f225ed6-a1c3-4ef6-a246-3a6cd2a33397.png",
       isDelete: false,
       createdAt: "2021-08-11T00:11:12.334Z",
       updatedAt: "2021-08-11T00:11:12.334Z"
