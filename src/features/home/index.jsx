@@ -18,11 +18,14 @@ const HomePage = () => {
   const dispatch = useDispatch();
   const productData = useSelector(selectProduct);
   const categories = useSelector(selectCategories);
-  // const { productList1, productList2, productList3 } = productData;
-  // const layout = {
-  //   gutter: { xs: 8, sm: 8, md: 8, lg: 8, xl: 8, xxl: 8 },
-  //   span: { xs: 6, sm: 6, md: 6, lg: 6, xl: 6, xxl: 6 },
-  // };
+  const { filteredProducts1, filteredProducts2, filteredProducts3 } = productData;
+  const layout = {
+    gutter: [
+      { xs: 0, sm: 0, md: 24, lg: 32, xl: 32, xxl: 32 },
+      { xs: 16, sm: 16, md: 24, lg: 32, xl: 32, xxl: 32 }
+    ],
+    span: { xs: 24, sm: 24, md: 12, lg: 8, xl: 8, xxl: 5 },
+  };
 
   const shouldRenderCategories = (categories) =>
     Array.isArray(categories) && categories.length > 0;
@@ -57,43 +60,39 @@ const HomePage = () => {
       </div>
     );
 
-  // useEffect(() => {
-  //   dispatch(getProductsByCategoryId(1));
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(getProductsByCategoryId({ catId: 1}));
+  }, [dispatch]);
 
-  // useEffect(() => {
-  //   dispatch(getProductsByCategoryId(2));
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(getProductsByCategoryId({ catId: 2}));
+  }, [dispatch]);
 
-  // useEffect(() => {
-  //   dispatch(getProductsByCategoryId(3));
-  // }, [dispatch]);
-
-  // useEffect(() => {
-  //   dispatch(getCategoryList());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(getProductsByCategoryId({ catId: 3}));
+  }, [dispatch]);
 
   return (
     <>
-      { 
-      renderCategoriesBlock(categories)
+      { renderCategoriesBlock(categories) }
       
-      // <ProductCardList
-      //   products={productList1.slice(0, 4)}
-      //   title="Rau - Củ - Trái cây"
-      //   layout={layout}
-      // />
-      /*
       <ProductCardList
-        products={productList2.slice(0, 4)}
+        products={filteredProducts1 || [].slice(0, 2)}
+        title="Rau Củ"
+        layout={layout}
+      />
+      
+       <ProductCardList
+        products={filteredProducts2 || [].slice(0, 4)}
         title="Thịt - Hải sản - Trứng"
         layout={layout}
       />
+
       <ProductCardList
-        products={productList3.slice(0, 4)}
+        products={filteredProducts3 || [].slice(0, 4)}
         title="Dầu ăn - Gia vị - Đồ khô"
         layout={layout}
-      /> */}
+      /> 
     </>
   );
 };

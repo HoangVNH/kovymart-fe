@@ -29,11 +29,11 @@ const ProductCardList = ({ products, title, layout, className, style }) => {
     <div className="product-list__container">
       <div className={`product-list__header ${className}`} style={style}>
         <span>{title}</span>
+        <button>Xem thêm</button>
       </div>
       <Row gutter={{ ...layout.gutter }} className="product-list__wrapper">
         {products.map((product) => (
           <Col
-            style={{ marginBottom: "2em" }}
             {...layout.span}
             key={`${product.id + product.categoryId}`}
           >

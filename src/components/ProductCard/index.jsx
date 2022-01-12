@@ -1,4 +1,4 @@
-import { Button, Card, Tag, Tooltip } from "antd";
+import { Button } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
 import ImageWithFallBack from "../ImageWithFallback";
@@ -17,33 +17,29 @@ const ProductCard = ({
   onAddToCart,
 }) => {
   return (
-    <Card
-      hoverable
+    <div
       className={`product-card__wrapper ${className}`}
       style={style}
     >
       <Link to={`/product/${id}`}>
         <div className="product-card__image">
-          {discount ? <Tag color="warning">{discount}%</Tag> : null}
           <ImageWithFallBack src={smallImage} alt={name} />
         </div>
-        <Tooltip title={name}>
-          <p className="product-card__name">{name}</p>
-        </Tooltip>
+      </Link>
+      <Link to={`/product/${id}`}>
+        <p className="product-card__name">{name}</p>
       </Link>
       <div className="product-card__price">
-        <Link to={`/product/${id}`}>
-          <div className="product-card__price--left">
-            <span className="product-card__net-price">
-              {Utils.Money({ money: price })}
-            </span>
-          </div>
-        </Link>
+        <div className="product-card__price--left">
+          <span className="product-card__net-price">
+            {Utils.Money({ money: price })}
+          </span>
+        </div>
         <Button className="product-card__button" onClick={onAddToCart}>
           Thêm vào giỏ
         </Button>
       </div>
-    </Card>
+    </div>
   );
 };
 

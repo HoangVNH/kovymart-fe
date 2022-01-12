@@ -8,9 +8,27 @@
 
   &__header {
     margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
     > span {
-      @include setFont(24px, 600, 1, #F44336);
+      @include setFont(24px, 600, 1, #000);
     }
+
+    > button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      font-size: 16px;
+      color: #626262;
+      font-weight: 400;
+    }
+  }
+
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
   }
 }
