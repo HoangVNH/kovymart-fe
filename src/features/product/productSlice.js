@@ -12,6 +12,14 @@ const initialState = {
   productList4: [],
   productList5: [],
   filteredProducts: [],
+  details: {
+    id: 0,
+    productName: "",
+    sku: "",
+    description: "",
+    price: 0,
+    discount: 0,
+  },
   originalProducts: [
     {
       id: 7,
@@ -680,14 +688,6 @@ const initialState = {
     }
   ],
   pagination: {},
-  detail: {
-    id: 0,
-    name: "",
-    sku: "",
-    description: "",
-    price: 0,
-    discount: 0,
-  },
 };
 
 //----------ACTIONS----------
@@ -695,14 +695,6 @@ export const getProductList = createAsyncThunk(
   "product/getProductList",
   async () => {
     const response = await productApi.getProductList();
-    return response.data;
-  }
-);
-
-export const getProductById = createAsyncThunk(
-  "product/getProductById",
-  async (id) => {
-    const response = await productApi.getProductById(id);
     return response.data;
   }
 );
@@ -727,12 +719,18 @@ const isRejectedAction = (action) =>
 //----------REDUCERS----------
 const productSlice = createSlice({
   name: "product",
-  initialState: initialState,
+  initialState,
   reducers: {
     getProductsByCategoryId: (state, action) => {
       const { catId } = action.payload;
 
       state[`filteredProducts${catId}`]  = state.originalProducts.filter((product) => product.categoryId === catId);
+    },
+    getProductById: (state, action) => {
+      const { productId } = action.payload;
+      const result = state.originalProducts.find( ({ id }) => id === +productId);
+
+      state.details = result;
     },
     setDataToEmpty: (state) => {
       state.detail = initialState.detail;
@@ -740,11 +738,6 @@ const productSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getProductById.fulfilled, (state, action) => {
-        state.requesting = false;
-        state.success = true;
-        state.detail = action.payload;
-      })
       .addCase(getProductList.fulfilled, (state, action) => {
         state.requesting = false;
         state.list = action.payload;
@@ -770,9 +763,9 @@ const productSlice = createSlice({
   },
 });
 
-export const { setDataToEmpty, getProductsByCategoryId } = productSlice.actions;
+export const { setDataToEmpty, getProductsByCategoryId, getProductById } = productSlice.actions;
 
 export const selectProduct = (state) => state.product;
-export const selectProductDetail = (state) => state.product.detail;
+export const selectProductDetails = (state) => state.product.details;
 
 export default productSlice.reducer;

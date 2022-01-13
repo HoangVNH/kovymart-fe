@@ -1,48 +1,45 @@
 import "./styles.scss";
 
-import { Col, Row, Tag, Skeleton, Space, InputNumber, Typography } from "antd";
+import { Col, Row, Tag, Space, InputNumber, Typography } from "antd";
 import {
-  ShoppingCartOutlined,
   CheckOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
-import React, { useEffect, useState, useCallback } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import ImageWithFallBack from "../../../../components/ImageWithFallback";
 import Utils from "../../../../components/UIKit/Utils";
 import ButtonUI from "../../../../components/UIKit/ButtonUI";
 import {
   getProductById,
-  selectProductDetail,
-  setDataToEmpty,
-} from "../productSlice";
+  selectProductDetails,
+} from "../../productSlice";
 import { useDispatch, useSelector } from "react-redux";
 import ReactHtmlParser from "react-html-parser";
-// import { addProductToCart } from "features/cart/cartSlice";
 
 const ProductDetails = () => {
-  const history = useHistory();
+  // const history = useHistory();
   const dispatch = useDispatch();
   const { productId } = useParams();
-  const productDetail = useSelector(selectProductDetail);
+  const productDetails = useSelector(selectProductDetails);
   const [quantity, setQuantity] = useState(1);
 
   const { productName, price, description, discount, largeImage } =
-    productDetail;
+    productDetails;
   const { Text } = Typography;
 
-  const modifyProduct = useCallback((product, quantity) => {
-    const modifiedProduct = {
-      ...product,
-      quantity,
-      productId: product.id,
-      productName: product.name,
-    };
-    delete modifiedProduct["id"];
-    delete modifiedProduct["name"];
+  // const modifyProduct = useCallback((product, quantity) => {
+  //   const modifiedProduct = {
+  //     ...product,
+  //     quantity,
+  //     productId: product.id,
+  //     productName: product.name,
+  //   };
+  //   delete modifiedProduct["id"];
+  //   delete modifiedProduct["name"];
 
-    return modifiedProduct;
-  }, []);
+  //   return modifiedProduct;
+  // }, []);
 
   // const handleBuyNow = useCallback(
   //   (product) => {
@@ -65,12 +62,8 @@ const ProductDetails = () => {
 
   useEffect(() => {
     if (Number(productId) > 0) {
-      dispatch(getProductById(productId));
+      dispatch(getProductById({ productId }));
     }
-
-    return () => {
-      dispatch(setDataToEmpty());
-    };
   }, [dispatch, productId]);
 
   return productId ? (
@@ -123,15 +116,15 @@ const ProductDetails = () => {
             <br />
             <Space>
               <ButtonUI
-                text="Thêm vào giỏ hàng"
+                text="Thêm giỏ hàng"
                 withIcon={<PlusOutlined className="align-baseline" />}
                 // onClick={() => handleAddToCart(productDetail, quantity)}
               />
-              <ButtonUI
+              {/* <ButtonUI
                 text="Mua ngay"
                 withIcon={<ShoppingCartOutlined className="align-baseline" />}
-                // onClick={() => handleBuyNow(productDetail)}
-              />
+                onClick={() => handleBuyNow(productDetail)}
+              /> */}
             </Space>
             <div className="mt-5">
               <Text>Lý do nên mua sản phẩm ?</Text>
@@ -158,7 +151,7 @@ const ProductDetails = () => {
       </Col>
     </Row>
   ) : (
-    <Skeleton />
+    <p>No Data</p>
   );
 };
 
