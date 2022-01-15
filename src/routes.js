@@ -2,6 +2,7 @@ import { Route } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import HomePage from './features/home';
 import ProductDetails from './features/product/pages/ProductDetails';
+import Category from './features/category';
 
 const routes = [
   {
@@ -13,6 +14,11 @@ const routes = [
     key: uuidv4(),
     path: `/product/:productId`,
     element:  <ProductDetails />,
+  },
+  {
+    key: uuidv4(),
+    path: `/category/:categoryId`,
+    element:  <Category />,
   },
 ];
 

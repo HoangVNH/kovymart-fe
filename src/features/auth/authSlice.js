@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import authApi from "../../apis/authApis";
+import authApis from "../../apis/authApis";
 import { setAccessTokenToLocalStorage } from "../../helpers/auth";
 import { NotifyHelper } from "../../helpers/notify-helper";
 import { ASYNC_STATUS } from "../../constants";
@@ -8,7 +8,7 @@ export const signUp = createAsyncThunk(
   "auth/signUp",
   async (values, { rejectWithValue }) => {
     try {
-      const { data } = await authApi.signUp(values);
+      const { data } = await authApis.signUp(values);
       return data;
     } catch (error) {
       const { response } = error;
@@ -26,7 +26,7 @@ export const signIn = createAsyncThunk(
   "auth/signIn",
   async (values, { rejectWithValue }) => {
     try {
-      const { data } = await authApi.signIn(values);
+      const { data } = await authApis.signIn(values);
       return data;
     } catch (error) {
       const { response } = error;

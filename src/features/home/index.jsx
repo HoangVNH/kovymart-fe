@@ -80,18 +80,21 @@ const HomePage = () => {
         products={filteredProducts1 || [].slice(0, 2)}
         title="Rau Củ"
         layout={layout}
+        catId={1}
       />
       
        <ProductCardList
         products={filteredProducts2 || [].slice(0, 4)}
         title="Thịt - Hải sản - Trứng"
         layout={layout}
+        catId={2}
       />
 
       <ProductCardList
         products={filteredProducts3 || [].slice(0, 4)}
         title="Dầu ăn - Gia vị - Đồ khô"
         layout={layout}
+        catId={3}
       /> 
     </>
   );

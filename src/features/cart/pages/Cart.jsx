@@ -10,7 +10,7 @@ import {
   selectTotalPrice,
   clearCart,
 } from "../cartSlice";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useCallback, useEffect } from "react";
 import { checkAuth } from "helper/auth";
 import { v4 as uuidv4 } from "uuid";
@@ -18,7 +18,7 @@ const { Text } = Typography;
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const cartItems = useSelector(selectCartItems);
   const totalPrice = useSelector(selectTotalPrice);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -38,9 +38,9 @@ const Cart = () => {
     if (isUserLoggedIn) {
       dispatch(getCart());
     } else {
-      history.push("/");
+      navigate.push("/");
     }
-  }, [dispatch, isUserLoggedIn, history]);
+  }, [dispatch, isUserLoggedIn, navigate]);
 
   return hasItems ? (
     <>
@@ -113,7 +113,7 @@ const Cart = () => {
         variant="success"
         text="Tiếp tục mua hàng"
         onClick={() => {
-          history.push("/");
+          navigate.push("/");
         }}
       />
     </div>

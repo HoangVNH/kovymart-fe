@@ -8,43 +8,42 @@ import {
 import { Col, Form, Layout, Row, Menu, Dropdown } from "antd";
 import {
   selectAuth,
-  // setSignInMsgToDefault,
-  // setSignOutMsgToDefault,
+  setSignInMsgToDefault,
+  setSignOutMsgToDefault,
   setSignOutMsgToSuccess,
-  // setSignUpMsgToDefault,
+  setSignUpMsgToDefault,
   signIn,
-  signUp, 
+  signUp,
 } from "../../features/auth/authSlice";
 import { checkAuth, clearAccessToken } from "../../helpers/auth";
-import React, { useCallback,  useState } from "react";
+import React, { useCallback, useEffect, useState, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-// import { ASYNC_STATUS } from "../../constants";
-// import LoginForm from "../../features/auth/components/LoginForm";
-// import RegisterForm from "../../features/auth/components/RegisterForm";
-// import { NotifyHelper } from "../../helpers/notify-helper";
+import { ASYNC_STATUS } from "../../constants";
+import LoginForm from "../../features/auth/components/LoginForm";
+import RegisterForm from "../../features/auth/components/RegisterForm";
+import { NotifyHelper } from "../../helpers/notify-helper";
 import Search from "./Search";
+import AuthContext from "./AuthContext";
 
 const { Header } = Layout;
 
 const MainHeader = () => {
-  const [isDisplayLoginModal, setIsDisplayLoginModal] = useState(false);
+  const { isDisplayLoginModal, setIsDisplayLoginModal } = useContext(AuthContext);
   const [isDisplayRegisterModal, setIsDisplayRegisterModal] = useState(false);
   const [isLoggedOut, setIsLoggedOut] = useState(false);
   const [loginFormInstance] = Form.useForm();
   const [registerFormInstance] = Form.useForm();
   const dispatch = useDispatch();
-  const history = useNavigate();
-  // const { isFetching, 
-  //   signUpStatus, signInStatus, signOutStatus 
-  // } =
-  //   useSelector(selectAuth);
-  // const isUserLoggedIn = checkAut();
+  const navigate = useNavigate();
+  const { isFetching, signUpStatus, signInStatus, signOutStatus } =
+    useSelector(selectAuth);
+  const isUserLoggedIn = checkAuth();
 
   const handleCloseLoginModal = useCallback(() => {
     setIsDisplayLoginModal(false);
     loginFormInstance.resetFields();
-  }, [loginFormInstance]);
+  }, [loginFormInstance, setIsDisplayLoginModal]);
 
   const handleCloseRegisterModal = useCallback(() => {
     setIsDisplayRegisterModal(false);
@@ -55,13 +54,13 @@ const MainHeader = () => {
     setIsDisplayLoginModal(false);
     loginFormInstance.resetFields();
     setIsDisplayRegisterModal(true);
-  }, [loginFormInstance]);
+  }, [loginFormInstance, setIsDisplayLoginModal]);
 
   const switchToLoginModal = useCallback(() => {
     setIsDisplayRegisterModal(false);
     registerFormInstance.resetFields();
     setIsDisplayLoginModal(true);
-  }, [registerFormInstance]);
+  }, [registerFormInstance, setIsDisplayLoginModal]);
 
   const handleRegister = useCallback(
     (values) => {
@@ -80,83 +79,75 @@ const MainHeader = () => {
 
   const handleLogout = useCallback(() => {
     clearAccessToken();
-    history.push("/");
+    navigate.push("/");
     setIsLoggedOut(true);
     dispatch(setSignOutMsgToSuccess());
-  }, [history, dispatch]);
+  }, [navigate, dispatch]);
 
   const renderMenuItem = () => {
-    return <button
-    type="button"
-    className="navigation-bar__login"
-    onClick={() => setIsDisplayLoginModal(true)}
-  >
-    <UserOutlined className="vertical-align-icon" />
-    <span>Đăng Nhập</span>
-  </button>;
-    // const menu = (
-    //   <Menu>
-    //     <Menu.Item
-    //       key="info"
-    //       icon={<InfoCircleOutlined />}
-    //       onClick={() => history.push("/info")}
-    //     >
-    //       Thông Tin
-    //     </Menu.Item>
-    //     <Menu.Item
-    //       key="logout"
-    //       icon={<PoweroffOutlined />}
-    //       onClick={handleLogout}
-    //     >
-    //       Đăng Xuất
-    //     </Menu.Item>
-    //   </Menu>
-    // );
+    const menu = (
+      <Menu>
+        <Menu.Item
+          key="info"
+          icon={<InfoCircleOutlined />}
+          onClick={() => navigate.push("/info")}
+        >
+          Thông Tin
+        </Menu.Item>
+        <Menu.Item
+          key="logout"
+          icon={<PoweroffOutlined />}
+          onClick={handleLogout}
+        >
+          Đăng Xuất
+        </Menu.Item>
+      </Menu>
+    );
 
-    // return isUserLoggedIn && !isLoggedOut ? (
-    //   <Dropdown overlay={menu}>
-    //     <a
-    //       href="#"
-    //       className="link--normalize"
-    //       onClick={(e) => e.preventDefault()}
-    //     >
-    //       <UserOutlined className="navigation-bar__login" /> Tài Khoản
-    //     </a>
-    //   </Dropdown>
-    // ) : (
-    //   <button
-    //     type="button"
-    //     className="navigation-bar__login"
-    //     onClick={() => setIsDisplayLoginModal(true)}
-    //   >
-    //     <UserOutlined className="vertical-align-icon" />
-    //     <span>Đăng Nhập</span>
-    //   </button>
-    // );
+    return isUserLoggedIn && !isLoggedOut ? (
+      <Dropdown overlay={menu}>
+        <a
+          href="#"
+          className="link--normalize"
+          onClick={(e) => e.preventDefault()}
+        >
+          <UserOutlined className="navigation-bar__login" /> Tài Khoản
+        </a>
+      </Dropdown>
+    ) : (
+      <button
+        type="button"
+        className="navigation-bar__login"
+        onClick={() => setIsDisplayLoginModal(true)}
+      >
+        <UserOutlined className="vertical-align-icon" />
+        <span>Đăng Nhập</span>
+      </button>
+    );
   };
 
-  // useEffect(() => {
-  //   if (signUpStatus === ASYNC_STATUS.SUCCESS) {
-  //     NotifyHelper.success("Đăng ký thành công", "Thông báo");
-  //     handleCloseRegisterModal();
-  //     dispatch(setSignUpMsgToDefault());
-  //   }
-  // }, [signUpStatus, handleCloseRegisterModal, dispatch]);
+  useEffect(() => {
+    if (signUpStatus === ASYNC_STATUS.SUCCESS) {
+      NotifyHelper.success("Đăng ký thành công", "Thông báo");
+      handleCloseRegisterModal();
+      dispatch(setSignUpMsgToDefault());
+    }
+  }, [signUpStatus, handleCloseRegisterModal, dispatch]);
 
-  // useEffect(() => {
-  //   if (signInStatus === ASYNC_STATUS.SUCCESS) {
-  //     NotifyHelper.success("Đăng nhập thành công", "Thông báo");
-  //     handleCloseLoginModal();
-  //     dispatch(setSignInMsgToDefault());
-  //   }
-  // }, [signInStatus, handleCloseLoginModal, dispatch]);
+  useEffect(() => {
+    if (signInStatus === ASYNC_STATUS.SUCCESS) {
+      NotifyHelper.success("Đăng nhập thành công", "Thông báo");
+      handleCloseLoginModal();
+      dispatch(setSignInMsgToDefault());
+    }
+  }, [signInStatus, handleCloseLoginModal, dispatch]);
 
-  // useEffect(() => {
-  //   if (signOutStatus === ASYNC_STATUS.SUCCESS) {
-  //     NotifyHelper.success("Đăng xuất thành công", "Thông báo");
-  //     dispatch(setSignOutMsgToDefault());
-  //   }
-  // }, [signOutStatus, dispatch]);
+  useEffect(() => {
+    if (signOutStatus === ASYNC_STATUS.SUCCESS) {
+      NotifyHelper.success("Đăng xuất thành công", "Thông báo");
+      dispatch(setSignOutMsgToDefault());
+    }
+  }, [signOutStatus, dispatch]);
 
   return (
     <>
@@ -170,17 +161,17 @@ const MainHeader = () => {
           </Col>
           <Col flex={2} className="navigation-bar__right">
             {renderMenuItem()}
-            {/* {isUserLoggedIn && !isLoggedOut && (
+            {isUserLoggedIn && !isLoggedOut && (
               <Link to="/cart" className="link--normalize navigation-bar__cart">
                 <ShoppingCartOutlined className="vertical-align-icon" />
                 <span>Giỏ Hàng</span>
               </Link>
-            )} */}
+            )}
           </Col>
         </Row>
       </Header>
 
-      {/* <LoginForm
+      <LoginForm
         isDisplay={isDisplayLoginModal}
         isFetching={isFetching}
         formInstance={loginFormInstance}
@@ -196,7 +187,7 @@ const MainHeader = () => {
         onClose={handleCloseRegisterModal}
         onFinish={handleRegister}
         onLoginClick={switchToLoginModal}
-      /> */}
+      />
     </>
   );
 };

@@ -58,7 +58,7 @@ const Utils = {
               {currency.replace(
                 /\B(?=(\d{3})+(?!\d))/g,
                 options.thousandsSeparator
-              )}{" "}
+              )}
               {options.symbol}
             </>
           )}
