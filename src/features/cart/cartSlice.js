@@ -21,7 +21,6 @@ export const addToCart = createAsyncThunk(
   "cart/addToCart",
   async (product, { rejectWithValue }) => {
     try {
-      console.log('product >>> ', product);
       const { data } = await cartApis.addToCart(product);
       NotifyHelper.success("", "Sản phẩm đã được thêm vào Giỏ hàng");
       return data;
@@ -39,6 +38,20 @@ export const changeQuantity = createAsyncThunk(
       const { data } = await cartApis.changeQuantity(quantity);
       return data;
     } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const removeFromCart = createAsyncThunk(
+  "cart/removeFromCart",
+  async (itemId, { rejectWithValue }) => {
+    try {
+      const { data } = await cartApis.removeFromCart(itemId);
+      NotifyHelper.success("", "Xóa sản phẩm thành công!");
+      return data;
+    } catch (error) {
+      NotifyHelper.error("", "Xóa sản phẩm thất bại!");
       return rejectWithValue(error.response.data);
     }
   }

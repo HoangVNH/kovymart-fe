@@ -22,9 +22,9 @@ const ProductCardList = ({ catId, products, title, layout, className, style }) =
     (product, quantity = 1) => {
       const modifiedProduct = modifyProduct(product, quantity);
 
-      dispatch(addToCart({ modifiedProduct, navigate}));
+      dispatch(addToCart(modifiedProduct));
     },
-    [dispatch, modifyProduct, navigate]
+    [dispatch, modifyProduct]
   );
 
   const handleNavigateToCategoryPage = useCallback(() => {

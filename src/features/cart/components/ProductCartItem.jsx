@@ -1,10 +1,10 @@
 import { Col, Row, Typography, Modal, Input } from "antd";
-import ImageWithFallBack from "components/ImageWithFallback";
+import ImageWithFallBack from "../../../components/ImageWithFallback";
 import { DeleteOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
-import ButtonUI from "components/UIKit/ButtonUI";
-import Utils from "components/UIKit/Utils";
+import ButtonUI from "../../../components/UIKit/ButtonUI";
+import Utils from "../../../components/UIKit/Utils";
 import PropTypes from "prop-types";
-import { changeQuantity, removeProductFromCart } from "../cartSlice";
+import { changeQuantity, removeFromCart } from "../cartSlice";
 import { useDispatch } from "react-redux";
 import React, { useState, useCallback, useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -35,7 +35,7 @@ const ProductCartItem = ({ product }) => {
 
   const handleDeleteProduct = useCallback(
     (id) => {
-      dispatch(removeProductFromCart({ itemId: id }));
+      dispatch(removeFromCart({ itemId: id }));
       setIsModalVisible(false);
     },
     [dispatch]
@@ -51,7 +51,7 @@ const ProductCartItem = ({ product }) => {
       setProductQuantity(productQuantity - 1);
       handleChangeQuantity(product.productId, productQuantity - 1);
     } else {
-      dispatch(removeProductFromCart({ itemId: product.id }));
+      dispatch(removeFromCart({ itemId: product.id }));
     }
   };
 

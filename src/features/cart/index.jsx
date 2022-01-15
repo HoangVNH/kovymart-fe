@@ -1,18 +1,19 @@
-import Payment from "../components/Payment";
-import ProductCartItem from "../components/ProductCartItem";
+import Payment from "./components/Payment";
+import ProductCartItem from "./components/ProductCartItem";
 import { Col, Row, Space, Modal, Typography } from "antd";
-import ButtonUI from "components/UIKit/ButtonUI";
-import "./Cart.scss";
+import ButtonUI from "../../components/UIKit/ButtonUI";
+import "./styles.scss";
 import { useSelector, useDispatch } from "react-redux";
 import {
   selectCartItems,
   getCart,
   selectTotalPrice,
   clearCart,
-} from "../cartSlice";
+  selectIsCartFetching
+} from "./cartSlice";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useCallback, useEffect } from "react";
-import { checkAuth } from "helper/auth";
+import { checkAuth } from "../../helpers/auth";
 import { v4 as uuidv4 } from "uuid";
 const { Text } = Typography;
 
@@ -21,6 +22,7 @@ const Cart = () => {
   const navigate = useNavigate();
   const cartItems = useSelector(selectCartItems);
   const totalPrice = useSelector(selectTotalPrice);
+  const isFetching = useSelector(selectIsCartFetching);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const isUserLoggedIn = checkAuth();
 
@@ -38,11 +40,11 @@ const Cart = () => {
     if (isUserLoggedIn) {
       dispatch(getCart());
     } else {
-      navigate.push("/");
+      navigate("/");
     }
   }, [dispatch, isUserLoggedIn, navigate]);
 
-  return hasItems ? (
+  return isFetching ? <p>Loading...</p> : hasItems ? (
     <>
       <Modal
         title="Thông báo ?"
@@ -75,7 +77,6 @@ const Cart = () => {
             {hasItems && (
               <ButtonUI
                 text="Xóa giỏ hàng"
-                variant="danger"
                 onClick={() => {
                   setIsModalVisible(true);
                 }}
@@ -113,7 +114,7 @@ const Cart = () => {
         variant="success"
         text="Tiếp tục mua hàng"
         onClick={() => {
-          navigate.push("/");
+          navigate("/");
         }}
       />
     </div>

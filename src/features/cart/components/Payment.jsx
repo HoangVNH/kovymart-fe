@@ -1,17 +1,17 @@
 import { Row, Col, Typography } from "antd";
-import Utils from "components/UIKit/Utils";
-import ButtonUI from "components/UIKit/ButtonUI";
+import Utils from "../../../components/UIKit/Utils";
+import ButtonUI from "../../../components/UIKit/ButtonUI";
 import PropTypes from "prop-types";
-import { useHistory } from "react-router-dom";
-import { NotifyHelper } from "helper/notify-helper";
-import { checkAuth } from "helper/auth";
-import { fee } from "constants/fee";
+import { useNavigate } from "react-router-dom";
+import { NotifyHelper } from "../../../helpers/notify-helper";
+import { checkAuth } from "../../../helpers/auth";
+import { fee } from "../../../constants";
 import React, { useCallback } from "react";
 
 const { Text } = Typography;
 
 const Payment = ({ totalPrice }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handlePayment = useCallback(() => {
     const isUserLoggedIn = checkAuth();
@@ -22,9 +22,9 @@ const Payment = ({ totalPrice }) => {
         "Không thể thanh toán"
       );
     } else {
-      history.push("/order");
+      navigate("/order");
     }
-  }, [history]);
+  }, [navigate]);
 
   return (
     <div className="border shadow-sm rounded-2 py-5 px-4 sticky-payment-form">

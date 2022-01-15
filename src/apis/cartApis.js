@@ -13,7 +13,7 @@ const cartApis = {
     const url = "/cart/change";
     return axiosClient.put(url, data);
   },
-  removeProductFromCart(data) {
+  removeFromCart(data) {
     const url = "/cart/remove";
     return axiosClient.put(url, data);
   },

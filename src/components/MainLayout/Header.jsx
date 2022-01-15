@@ -79,7 +79,7 @@ const MainHeader = () => {
 
   const handleLogout = useCallback(() => {
     clearAccessToken();
-    navigate.push("/");
+    navigate("/");
     setIsLoggedOut(true);
     dispatch(setSignOutMsgToSuccess());
   }, [navigate, dispatch]);
@@ -90,7 +90,7 @@ const MainHeader = () => {
         <Menu.Item
           key="info"
           icon={<InfoCircleOutlined />}
-          onClick={() => navigate.push("/info")}
+          onClick={() => navigate("/info")}
         >
           Thông Tin
         </Menu.Item>

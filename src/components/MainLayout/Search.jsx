@@ -5,11 +5,11 @@ import {
 } from "react-router-dom";
 
 const Search = () => {
-  const history = useNavigate()
+  const navigate = useNavigate()
 
   const handleSearch = (value) => {
       if(value && value.length > 1)
-        history.push(`/product?search=${value}`);
+        navigate(`/product?search=${value}`);
   };
 
   return (
