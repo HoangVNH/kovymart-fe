@@ -136,7 +136,7 @@ const cartSlice = createSlice({
   },
 });
 
-export const selectCartItems = (state) => state.cart.items;
+export const selectCartItems = (state) => state.cart.cartItems;
 export const selectIsCartFetching = (state) => state.cart.isFetching;
 export const selectTotalPrice = (state) => state.cart.totalPrice;
 
