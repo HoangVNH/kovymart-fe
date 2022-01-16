@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import ProductCardList from "../../components/ProductCardList";
 import "./styles.scss";
 import CircleCategory from "../../components/CircleCategory";
-import { Divider } from 'antd';
 import { Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/scss/grid";

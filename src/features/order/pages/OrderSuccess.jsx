@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Card, Row, Col, Typography, Button } from "antd";
-import ButtonUI from "../../../components/UIKit/ButtonUI";
 import { CheckCircleOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { setMessageOrderToDefault } from "../orderSlice";

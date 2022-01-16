@@ -1,27 +1,26 @@
 import {
-    Col,
-    Row,
-    Card,
-    Typography,
-    Select,
-    Space,
-    Input,
-    Form,
-    Button,
+  Col,
+  Row,
+  Card,
+  Typography,
+  Select,
+  Space,
+  Input,
+  Form,
+  Button,
 } from "antd"
 import { PlusOutlined } from "@ant-design/icons"
-import ButtonUI from "../../components/UIKit/ButtonUI"
 import { useNavigate } from "react-router-dom"
 import { checkAuth } from "../../helpers/auth"
 import { useEffect, useState } from "react"
 import { useSelector, useDispatch } from 'react-redux'
 import {
-    getProvinces,
-    getDistricts,
-    getWards,
-    selectProvinces,
-    selectDistricts,
-    selectWards,
+  getProvinces,
+  getDistricts,
+  getWards,
+  selectProvinces,
+  selectDistricts,
+  selectWards,
 } from '../location/locationSlice'
 import { insertAddress, selectAddressMessage, setDefaultAddressMessage } from "./addressSlice"
 import { ASYNC_STATUS } from "../../constants"
@@ -146,7 +145,7 @@ const AddAddress = () => {
                                     rules={[
                                         { required: true, message: "Bạn phải nhập thông tin này!" },
                                         {
-                                            pattern: new RegExp(/^(?:(?:\(?(?:00|\+)([1-4]\d\d|[1-9]\d?)\)?)?[\-\.\ \\\/]?)?((?:\(?\d{1,}\)?[\-\.\ \\\/]?){0,})(?:[\-\.\ \\\/]?(?:#|ext\.?|extension|x)[\-\.\ \\\/]?(\d+))?$/i),
+                                            pattern: new RegExp(/^(?:(?:\(?(?:00|\+)([1-4]\d\d|[1-9]\d?)\)?)?[-. \\/]?)?((?:\(?\d{1,}\)?[-. \\/]?){0,})(?:[-. \\/]?(?:#|ext\.?|extension|x)[-. \\/]?(\d+))?$/i),
                                             message: "Vui nhập số điện thoại hợp lệ !"
                                         },
                                         {
