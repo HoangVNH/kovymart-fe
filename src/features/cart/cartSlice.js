@@ -124,6 +124,15 @@ const cartSlice = createSlice({
       state.totalItems = payload.items?.length;
       state.totalPrice = payload.totalPrice;
     },
+    [removeFromCart.pending]: (state) => {
+      state.isFetching = true;
+    },
+    [removeFromCart.fulfilled]: (state, { payload }) => {
+      state.isFetching = false;
+      state.cartItems = payload.items;
+      state.totalItems = payload.items?.length;
+      state.totalPrice = payload.totalPrice;
+    },
     [clearCart.pending]: (state) => {
       state.isFetching = true;
     },
