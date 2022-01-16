@@ -64,7 +64,7 @@ const ProductCardList = ({ catId, products, title, layout, className, style }) =
 };
 
 ProductCardList.propTypes = {
-  catId: PropTypes.string || PropTypes.number,
+  catId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   products: PropTypes.array.isRequired,
   title: PropTypes.string.isRequired,
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),

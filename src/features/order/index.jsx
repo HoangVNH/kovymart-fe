@@ -216,14 +216,14 @@ const Order = () => {
                       </Text>
                     </Col>
                   </Row>
-                  <Row align="middle" justify="center">
+                  {/* <Row align="middle" justify="center">
                     <Col xs={14} md={8}>
                       <Text strong>Phí vận chuyển: </Text>
                     </Col>
                     <Col xs={10} md={8} className="align-end">
                       <Text strong>{Utils.Money({ money: fee.shipping })}</Text>
                     </Col>
-                  </Row>
+                  </Row> */}
                   <Divider />
                   <Row align="middle" justify="center">
                     <Col xs={14} md={8}>

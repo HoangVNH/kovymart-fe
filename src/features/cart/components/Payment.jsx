@@ -42,7 +42,7 @@ const Payment = ({ totalPrice }) => {
           <Text>{Utils.Money({ money: totalPrice })}</Text>
         </Col>
       </Row>
-      <Row className="mb-3">
+      {/* <Row className="mb-3">
         <Col xs={12} sm={24} md={12} span={12}>
           <Text strong>Phí vận chuyển:</Text>
         </Col>
@@ -55,7 +55,7 @@ const Payment = ({ totalPrice }) => {
         >
           <Text>{Utils.Money({ money: fee.shipping })}</Text>
         </Col>
-      </Row>
+      </Row> */}
       <Row>
         <Col xs={12} sm={24} md={12} span={12}>
           <Text strong> Tổng tiền:</Text>

@@ -33,7 +33,7 @@ const ModalListAddress = ({ setVisibility, visible }) => {
                     return <CardAddress key={item.id} address={item} />
                 })} </> : null}
             <Row className="mt-5" type="flex" justify="end">
-                <Link to="/address/add">
+                <Link to="/address">
                     <ButtonUI withIcon={<PlusOutlined />} variant="light" text="Thêm địa chỉ" />
                 </Link>
             </Row>
