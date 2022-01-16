@@ -111,7 +111,7 @@ const cartSlice = createSlice({
     },
     [getCart.fulfilled]: (state, { payload }) => {
       state.isFetching = false;
-      state.items = payload.items;
+      state.cartItems = payload.items;
       state.totalItems = payload.items?.length;
       state.totalPrice = payload.totalPrice;
     },
@@ -120,7 +120,7 @@ const cartSlice = createSlice({
     },
     [changeQuantity.fulfilled]: (state, { payload }) => {
       state.isFetching = false;
-      state.items = payload.items;
+      state.cartItems = payload.items;
       state.totalItems = payload.items?.length;
       state.totalPrice = payload.totalPrice;
     },
@@ -129,7 +129,7 @@ const cartSlice = createSlice({
     },
     [clearCart.fulfilled]: (state, { payload }) => {
       state.isFetching = false;
-      state.items = payload.items;
+      state.cartItems = payload.items;
       state.totalItems = payload.items?.length;
       state.totalPrice = payload.totalPrice;
     },
