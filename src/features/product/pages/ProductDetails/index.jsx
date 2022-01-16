@@ -14,7 +14,7 @@ import {
 } from "../../productSlice";
 import { useDispatch, useSelector } from "react-redux";
 import ReactHtmlParser from "react-html-parser";
-import { addToCart } from "../../../cart/cartSlice";
+import { addProductToCart } from "../../../cart/cartSlice";
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
@@ -42,7 +42,7 @@ const ProductDetails = () => {
     (product, quantity) => {
       const modifiedProduct = modifyProduct(product, quantity);
 
-      dispatch(addToCart(modifiedProduct));
+      dispatch(addProductToCart(modifiedProduct));
     },
     [dispatch, modifyProduct]
   );

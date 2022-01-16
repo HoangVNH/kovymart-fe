@@ -1,11 +1,11 @@
 import axiosClient from "./axiosClient";
 
-const cartApis = {
+const cartApi = {
   getCart() {
     const url = "/cart";
     return axiosClient.get(url);
   },
-  addToCart(product) {
+  addProductToCart(product) {
     const url = "/cart/add";
     return axiosClient.post(url, product);
   },
@@ -13,7 +13,7 @@ const cartApis = {
     const url = "/cart/change";
     return axiosClient.put(url, data);
   },
-  removeFromCart(data) {
+  removeProductFromCart(data) {
     const url = "/cart/remove";
     return axiosClient.put(url, data);
   },
@@ -29,4 +29,4 @@ const cartApis = {
   },
 };
 
-export default cartApis;
+export default cartApi;

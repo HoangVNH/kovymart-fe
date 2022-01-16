@@ -2,26 +2,26 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { NotifyHelper } from "../../helpers/notify-helper";
 import { fee } from "../../constants";
-import cartApis from "../../apis/cartApis";
+import cartApi from "../../apis/cartApis";
 
 const initialState = {
   finalPrices: fee.shipping,
   totalPrice: 0,
-  cartItems: [],
+  items: [],
   totalItems: 0,
   isFetching: false,
 };
 
 export const getCart = createAsyncThunk("cart/getCart", async () => {
-  const response = await cartApis.getCart();
+  const response = await cartApi.getCart();
   return response.data;
 });
 
-export const addToCart = createAsyncThunk(
-  "cart/addToCart",
+export const addProductToCart = createAsyncThunk(
+  "cart/addProductToCart",
   async (product, { rejectWithValue }) => {
     try {
-      const { data } = await cartApis.addToCart(product);
+      const { data } = await cartApi.addProductToCart(product);
       NotifyHelper.success("", "Sản phẩm đã được thêm vào Giỏ hàng");
       return data;
     } catch (error) {
@@ -35,7 +35,7 @@ export const changeQuantity = createAsyncThunk(
   "cart/changeQuantity",
   async (quantity, { rejectWithValue }) => {
     try {
-      const { data } = await cartApis.changeQuantity(quantity);
+      const { data } = await cartApi.changeQuantity(quantity);
       return data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -43,11 +43,11 @@ export const changeQuantity = createAsyncThunk(
   }
 );
 
-export const removeFromCart = createAsyncThunk(
-  "cart/removeFromCart",
+export const removeProductFromCart = createAsyncThunk(
+  "cart/removeProduct",
   async (itemId, { rejectWithValue }) => {
     try {
-      const { data } = await cartApis.removeFromCart(itemId);
+      const { data } = await cartApi.removeProductFromCart(itemId);
       NotifyHelper.success("", "Xóa sản phẩm thành công!");
       return data;
     } catch (error) {
@@ -61,7 +61,7 @@ export const clearCart = createAsyncThunk(
   "cart/clearCart",
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await cartApis.clearCart();
+      const { data } = await cartApi.clearCart();
       NotifyHelper.success("", "Xoá giỏ hàng thành công!");
       return data;
     } catch (error) {
@@ -75,34 +75,7 @@ export const clearCart = createAsyncThunk(
 const cartSlice = createSlice({
   name: "cart",
   initialState,
-  reducers: {
-    // addToCart: (state, action) => {
-    //   const { product } = action.payload;
-    //   let isAlreadyExists = false;
-
-    //   state.cartItems.forEach((item) => {
-    //     if (item.id === product.id) {
-    //       isAlreadyExists = true;
-    //       item.count++;
-    //     }
-    //   });
-
-    //   if (!isAlreadyExists) {
-    //     state.cartItems.push({...product, count: 1});
-    //   }
-
-    //   NotifyHelper.success("", "Sản phẩm đã được thêm vào giỏ hàng");
-    // },
-    // removeFromCart: (state, action) => {
-    //   const { product } = action.payload;
-    //   const newCartItems = state.cartItems.filter((item) => item.id !== product.id);
-
-    //   state.cartItems = newCartItems;
-
-    //   NotifyHelper.success("", "Sản phẩm đã được xóa khỏi giỏ hàng");
-    // }
-  },
-  
+  reducers: {},
   extraReducers: {
     [getCart.pending]: (state) => {
       if (state.isFetching === false) {
@@ -111,7 +84,7 @@ const cartSlice = createSlice({
     },
     [getCart.fulfilled]: (state, { payload }) => {
       state.isFetching = false;
-      state.cartItems = payload.items;
+      state.items = payload.items;
       state.totalItems = payload.items?.length;
       state.totalPrice = payload.totalPrice;
     },
@@ -120,16 +93,16 @@ const cartSlice = createSlice({
     },
     [changeQuantity.fulfilled]: (state, { payload }) => {
       state.isFetching = false;
-      state.cartItems = payload.items;
+      state.items = payload.items;
       state.totalItems = payload.items?.length;
       state.totalPrice = payload.totalPrice;
     },
-    [removeFromCart.pending]: (state) => {
+    [removeProductFromCart.pending]: (state) => {
       state.isFetching = true;
     },
-    [removeFromCart.fulfilled]: (state, { payload }) => {
+    [removeProductFromCart.fulfilled]: (state, { payload }) => {
       state.isFetching = false;
-      state.cartItems = payload.items;
+      state.items = payload.items;
       state.totalItems = payload.items?.length;
       state.totalPrice = payload.totalPrice;
     },
@@ -138,14 +111,14 @@ const cartSlice = createSlice({
     },
     [clearCart.fulfilled]: (state, { payload }) => {
       state.isFetching = false;
-      state.cartItems = payload.items;
+      state.items = payload.items;
       state.totalItems = payload.items?.length;
       state.totalPrice = payload.totalPrice;
     },
   },
 });
 
-export const selectCartItems = (state) => state.cart.cartItems;
+export const selectCartItems = (state) => state.cart.items;
 export const selectIsCartFetching = (state) => state.cart.isFetching;
 export const selectTotalPrice = (state) => state.cart.totalPrice;
 

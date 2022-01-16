@@ -1,6 +1,6 @@
 import Payment from "./components/Payment";
 import ProductCartItem from "./components/ProductCartItem";
-import { Col, Row, Space, Modal, Typography } from "antd";
+import { Col, Row, Space, Modal, Typography, Button } from "antd";
 import ButtonUI from "../../components/UIKit/ButtonUI";
 import "./styles.scss";
 import { useSelector, useDispatch } from "react-redux";
@@ -9,7 +9,6 @@ import {
   getCart,
   selectTotalPrice,
   clearCart,
-  selectIsCartFetching
 } from "./cartSlice";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useCallback, useEffect } from "react";
@@ -22,7 +21,6 @@ const Cart = () => {
   const navigate = useNavigate();
   const cartItems = useSelector(selectCartItems);
   const totalPrice = useSelector(selectTotalPrice);
-  const isFetching = useSelector(selectIsCartFetching);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const isUserLoggedIn = checkAuth();
 
@@ -44,7 +42,7 @@ const Cart = () => {
     }
   }, [dispatch, isUserLoggedIn, navigate]);
 
-  return isFetching ? <p>Loading...</p> : hasItems ? (
+  return hasItems ? (
     <>
       <Modal
         title="Thông báo ?"
@@ -59,7 +57,6 @@ const Cart = () => {
             key={uuidv4()}
           />,
           <ButtonUI
-            variant="danger"
             text="Xóa"
             onClick={handleClearCart}
             key={uuidv4()}
@@ -71,17 +68,16 @@ const Cart = () => {
       <Row type="flex" justify="center">
         <Col className="my-5" span={24} xl={20}>
           <Space size={20} className="ps-3">
+            <Button
+              onClick={() => {
+                setIsModalVisible(true);
+              }}
+            >
+              Xóa giỏ hàng
+            </Button>
             <Link to="/">
               <ButtonUI text="Tiếp tục mua hàng" />
             </Link>
-            {hasItems && (
-              <ButtonUI
-                text="Xóa giỏ hàng"
-                onClick={() => {
-                  setIsModalVisible(true);
-                }}
-              />
-            )}
           </Space>
           <Row className="mt-5 " type="flex" justify="center">
             <Col
@@ -90,19 +86,15 @@ const Cart = () => {
               lg={16}
               className="mb-4 px-3 d-flex justify-content-center"
             >
-              {hasItems && (
-                <Row span={24}>
-                  {cartItems.map((item) => (
-                    <ProductCartItem key={item.productId} product={item} />
-                  ))}
-                </Row>
-              )}
+              <Row span={24}>
+                {cartItems.map((item) => (
+                  <ProductCartItem key={item.productId} product={item} />
+                ))}
+              </Row>
             </Col>
-            {hasItems && (
-              <Col span={22} sm={11} lg={8} className="px-5">
-                <Payment totalPrice={totalPrice} />
-              </Col>
-            )}
+            <Col span={22} sm={11} lg={8} className="px-5">
+              <Payment totalPrice={totalPrice} />
+            </Col>
           </Row>
         </Col>
       </Row>

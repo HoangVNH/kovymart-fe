@@ -1,5 +1,5 @@
 import { Col, Row } from "antd";
-import { addToCart } from "../../features/cart/cartSlice";
+import { addProductToCart } from "../../features/cart/cartSlice";
 import PropTypes from "prop-types";
 import React, { useCallback } from "react";
 import { useDispatch } from "react-redux";
@@ -22,7 +22,7 @@ const ProductCardList = ({ catId, products, title, layout, className, style }) =
     (product, quantity = 1) => {
       const modifiedProduct = modifyProduct(product, quantity);
 
-      dispatch(addToCart(modifiedProduct));
+      dispatch(addProductToCart(modifiedProduct));
     },
     [dispatch, modifyProduct]
   );

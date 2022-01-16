@@ -1,10 +1,10 @@
 import { Col, Row, Typography, Modal, Input } from "antd";
 import ImageWithFallBack from "../../../components/ImageWithFallback";
-import { DeleteOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
+import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import ButtonUI from "../../../components/UIKit/ButtonUI";
 import Utils from "../../../components/UIKit/Utils";
 import PropTypes from "prop-types";
-import { changeQuantity, removeFromCart } from "../cartSlice";
+import { changeQuantity, removeProductFromCart } from "../cartSlice";
 import { useDispatch } from "react-redux";
 import React, { useState, useCallback, useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -35,7 +35,7 @@ const ProductCartItem = ({ product }) => {
 
   const handleDeleteProduct = useCallback(
     (id) => {
-      dispatch(removeFromCart({ itemId: id }));
+      dispatch(removeProductFromCart({ itemId: id }));
       setIsModalVisible(false);
     },
     [dispatch]
@@ -51,7 +51,7 @@ const ProductCartItem = ({ product }) => {
       setProductQuantity(productQuantity - 1);
       handleChangeQuantity(product.productId, productQuantity - 1);
     } else {
-      dispatch(removeFromCart({ itemId: product.id }));
+      dispatch(removeProductFromCart({ itemId: product.id }));
     }
   };
 
@@ -101,11 +101,6 @@ const ProductCartItem = ({ product }) => {
               )}
             </Title>
           </Link>
-          <Typography.Link>
-            <Text type="danger" onClick={() => setIsModalVisible(true)}>
-              <DeleteOutlined className="align-baseline" /> Xóa sản phẩm
-            </Text>
-          </Typography.Link>
         </Col>
         <Col
           span={24}
