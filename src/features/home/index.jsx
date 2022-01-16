@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ProductCardList from "../../components/ProductCardList";
 import "./styles.scss";
 import CircleCategory from "../../components/CircleCategory";
+import { Divider } from 'antd';
 import { Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/scss/grid";
@@ -81,20 +82,23 @@ const HomePage = () => {
         title="Rau Củ"
         layout={layout}
         catId={1}
+        isHomepage
       />
-      
+      <div className="custom-divider" />
        <ProductCardList
         products={filteredProducts2 || [].slice(0, 4)}
         title="Thịt - Hải sản - Trứng"
         layout={layout}
         catId={2}
+        isHomepage
       />
-
+      <div className="custom-divider" />
       <ProductCardList
         products={filteredProducts3 || [].slice(0, 4)}
         title="Dầu ăn - Gia vị - Đồ khô"
         layout={layout}
         catId={3}
+        isHomepage
       /> 
     </>
   );

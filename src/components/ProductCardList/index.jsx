@@ -7,7 +7,7 @@ import ProductCard from "../../components/ProductCard";
 import "./styles.scss";
 import { useNavigate } from 'react-router-dom';
 
-const ProductCardList = ({ catId, products, title, layout, className, style }) => {
+const ProductCardList = ({ catId, products, title, layout, className, style, isHomepage = false }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -32,34 +32,37 @@ const ProductCardList = ({ catId, products, title, layout, className, style }) =
   }, [navigate, catId]);
 
   return (
-    <div className="product-list__container">
-      <div className={`product-list__header ${className}`} style={style}>
-        <span>{title}</span>
-        <button 
-          onClick={handleNavigateToCategoryPage}
-        >
-          Xem thêm
-        </button>
+    <>
+      <div className="product-list__container">
+        <div className={`product-list__header ${className}`} style={style}>
+          <span>{title}</span>
+          {isHomepage && 
+            <button 
+              onClick={handleNavigateToCategoryPage}
+            >
+              Xem thêm
+            </button>}
+        </div>
+        <Row gutter={{ ...layout.gutter }} className="product-list__wrapper">
+          {products.map((product) => (
+            <Col
+              {...layout.span}
+              key={`${product.id + product.categoryId}`}
+            >
+              <ProductCard
+                id={product.id}
+                name={product.productName}
+                price={product.price}
+                netPrice={product.netPrice}
+                discount={product.discount}
+                onAddToCart={() => handleAddToCart(product)}
+                smallImage={product.smallImage}
+              />
+            </Col>
+          ))}
+        </Row>
       </div>
-      <Row gutter={{ ...layout.gutter }} className="product-list__wrapper">
-        {products.map((product) => (
-          <Col
-            {...layout.span}
-            key={`${product.id + product.categoryId}`}
-          >
-            <ProductCard
-              id={product.id}
-              name={product.productName}
-              price={product.price}
-              netPrice={product.netPrice}
-              discount={product.discount}
-              onAddToCart={() => handleAddToCart(product)}
-              smallImage={product.smallImage}
-            />
-          </Col>
-        ))}
-      </Row>
-    </div>
+    </>
   );
 };
 

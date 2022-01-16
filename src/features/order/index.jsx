@@ -9,6 +9,7 @@ import {
   Input,
   Form,
   Tag,
+  Button,
 } from "antd";
 import { HomeOutlined } from "@ant-design/icons";
 import ButtonUI from "../../components/UIKit/ButtonUI";
@@ -240,19 +241,20 @@ const Order = () => {
               <Col style={{ textAlign: "center", marginTop: "2em" }}>
                 <Row type="flex" justify="center">
                   <Link to={"/cart"}>
-                    <ButtonUI
-                      className="mt-2 mx-1"
-                      text="Quay lại"
-                      variant="secondary"
+                    <Button
+                      style={{ marginRight: '8px' }}
                       htmlType="button"
-                    ></ButtonUI>
+                    >
+                      Quay lại
+                    </Button>
                   </Link>
                   {default_address ? (
-                    <ButtonUI
-                      className="mt-2 mx-1"
+                    <Button
+                      type="primary"
                       htmlType="submit"
-                      text="Xác nhận thanh toán"
-                    ></ButtonUI>
+                    >
+                      Xác nhận thanh toán
+                    </Button>
                   ) : null}
                 </Row>
               </Col>

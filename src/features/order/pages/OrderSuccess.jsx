@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Card, Row, Col, Typography } from "antd";
+import { Card, Row, Col, Typography, Button } from "antd";
 import ButtonUI from "../../../components/UIKit/ButtonUI";
 import { CheckCircleOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
@@ -23,28 +23,29 @@ const OrderSuccess = () => {
         >
           <Row type="flex" align="middle" justify="center">
             <Col sm={24} md={14}>
-              <Title level={1} style={{ color: "#65B891" }}>
-                <CheckCircleOutlined style={{}} />
+              <Title level={2}>
+                <CheckCircleOutlined style={{ color: '#40a9ff' }} />
                 <br />
               </Title>
-              <Title level={4} style={{ color: "#65B891" }}>
+              <Title level={1}>
                 Đặt hàng thành công !
               </Title>
               <br />{" "}
               <Text style={{ fontSize: "1.2em" }}>
-                {" "}
                 Đơn hàng của bạn đã được đặt hàng thành công chúng tôi sẽ cố
                 gắng giao hàng nhanh nhất !
               </Text>
               <br />
               <Link to={"/"}>
-                <ButtonUI
-                  text="Xác nhận"
+                <Button
                   className="my-5"
-                  variant="success"
-                  size="large"
+                  type="primary"
+                  htmlType="submit"
                   block={true}
-                />
+                  size="large"
+                >
+                  Xác nhận
+                </Button>
               </Link>
             </Col>
           </Row>

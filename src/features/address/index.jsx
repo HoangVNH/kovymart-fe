@@ -7,6 +7,7 @@ import {
     Space,
     Input,
     Form,
+    Button,
 } from "antd"
 import { PlusOutlined } from "@ant-design/icons"
 import ButtonUI from "../../components/UIKit/ButtonUI"
@@ -250,11 +251,19 @@ const AddAddress = () => {
 
                         <Col style={{ textAlign: "center", marginTop: "2em" }}>
                             <Space className="mt-4" size={20}>
-                                <ButtonUI htmlType="button" text="Quay lại" variant="secondary" onClick={goBack}></ButtonUI>
-                                <ButtonUI
-                                    htmlType="submit"
-                                    text="Xác nhận"
-                                ></ButtonUI>
+                            <Button
+                              style={{ marginRight: '8px' }}
+                              htmlType="button"
+                              onClick={goBack}
+                            >
+                              Quay lại
+                            </Button>
+                            <Button
+                              type="primary"
+                              htmlType="submit"
+                            >
+                              Xác nhận
+                            </Button>
                             </Space>
                         </Col>
                     </Form>

@@ -1,9 +1,9 @@
 import "./styles.scss";
 
-import { Col, InputNumber, Row, Typography } from "antd";
+import { Col, Row, Typography } from "antd";
 import {
-  PlusOutlined,
-} from "@ant-design/icons";
+  PlusOutlined
+} from '@ant-design/icons';
 import React, { useEffect, useCallback, useState } from "react";
 import { useParams } from "react-router-dom";
 import ImageWithFallBack from "../../../../components/ImageWithFallback";
@@ -15,6 +15,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import ReactHtmlParser from "react-html-parser";
 import { addProductToCart } from "../../../cart/cartSlice";
+import Quantity from "../../../../components/Quantity";
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
@@ -46,6 +47,18 @@ const ProductDetails = () => {
     },
     [dispatch, modifyProduct]
   );
+
+  const handleIncrease = () => {
+    if (quantity + 1 <= 90) {
+      setQuantity(quantity + 1);
+    }
+  };
+
+  const handleDecrease = () => {
+    if (quantity - 1 > 0) {
+      setQuantity(quantity - 1);
+    }
+  };
 
   useEffect(() => {
     if (Number(productId) > 0) {
@@ -82,12 +95,10 @@ const ProductDetails = () => {
                 </Text>
               </> : null}
             </div>
-            <InputNumber
-              className="mb-3"
-              defaultValue={quantity}
-              onChange={(e) => setQuantity(e)}
-              min={1}
-              max={99}
+            <Quantity 
+              quantity={quantity} 
+              onDecrease={handleDecrease}
+              onIncrease={handleIncrease}
             />
             <br />
             <button

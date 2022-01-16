@@ -1,20 +1,20 @@
 import Payment from "./components/Payment";
 import ProductCartItem from "./components/ProductCartItem";
-import { Col, Row, Space, Modal, Typography, Button } from "antd";
+import { Col, Row, Modal } from "antd";
 import ButtonUI from "../../components/UIKit/ButtonUI";
 import "./styles.scss";
 import { useSelector, useDispatch } from "react-redux";
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import {
   selectCartItems,
   getCart,
   selectTotalPrice,
   clearCart,
 } from "./cartSlice";
-import { Link, useNavigate } from "react-router-dom";
-import React, { useState, useCallback, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import { checkAuth } from "../../helpers/auth";
-import { v4 as uuidv4 } from "uuid";
-const { Text } = Typography;
+const { confirm } = Modal;
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -24,15 +24,28 @@ const Cart = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const isUserLoggedIn = checkAuth();
 
-  const handleClearCart = useCallback(() => {
-    dispatch(clearCart());
-    setIsModalVisible(false);
-  }, [dispatch]);
-
   const checkCartHasItems = (cartItems) =>
     Array.isArray(cartItems) && cartItems.length > 0;
 
   const hasItems = checkCartHasItems(cartItems);
+
+  const showConfirmModal = () => {
+    return confirm({
+      visible: isModalVisible,
+      title: 'Thông báo',
+      icon: <ExclamationCircleOutlined />,
+      content: 'Bạn có chắc muốn xóa toàn bộ sản phẩm ?',
+      okText: 'Xác nhận',
+      okType: 'danger',
+      cancelText: 'Đóng',
+      onOk() {
+        dispatch(clearCart());
+      },
+      onCancel() {
+        setIsModalVisible(false);
+      },
+    });
+  }
 
   useEffect(() => {
     if (isUserLoggedIn) {
@@ -43,62 +56,38 @@ const Cart = () => {
   }, [dispatch, isUserLoggedIn, navigate]);
 
   return hasItems ? (
-    <>
-      <Modal
-        title="Thông báo ?"
-        visible={isModalVisible}
-        footer={[
-          <ButtonUI
-            variant="light"
-            onClick={() => {
-              setIsModalVisible(false);
-            }}
-            text="Quay lại"
-            key={uuidv4()}
-          />,
-          <ButtonUI
-            text="Xóa"
-            onClick={handleClearCart}
-            key={uuidv4()}
-          />,
-        ]}
-      >
-        <Text>Bạn có chắc chắn muốn xóa giỏ hàng ?</Text>
-      </Modal>
-      <Row type="flex" justify="center">
-        <Col className="my-5" span={24} xl={20}>
-          <Space size={20} className="ps-3">
-            <Button
-              onClick={() => {
-                setIsModalVisible(true);
-              }}
-            >
-              Xóa giỏ hàng
-            </Button>
-            <Link to="/">
-              <ButtonUI text="Tiếp tục mua hàng" />
-            </Link>
-          </Space>
-          <Row className="mt-5 " type="flex" justify="center">
-            <Col
-              span={24}
-              sm={13}
-              lg={16}
-              className="mb-4 px-3 d-flex justify-content-center"
-            >
-              <Row span={24}>
-                {cartItems.map((item) => (
-                  <ProductCartItem key={item.productId} product={item} />
-                ))}
-              </Row>
-            </Col>
-            <Col span={22} sm={11} lg={8} className="px-5">
-              <Payment totalPrice={totalPrice} />
-            </Col>
+  <Row type="flex" justify="center">
+    <Col className="my-5" span={24} xl={20}>
+      <div className="cart-detail__header">
+        <div className="cart-detail__title">Giỏ hàng của bạn</div>
+        <div className="clear-button__wrapper">
+          <button
+            onClick={showConfirmModal}
+            className="n-btn"
+          >
+            Xóa hết
+          </button>
+        </div>
+      </div>
+      <Row className="mt-5 " type="flex" justify="center">
+        <Col
+          span={24}
+          sm={13}
+          lg={16}
+          className="mb-4 d-flex justify-content-center"
+        >
+          <Row span={24}>
+            {cartItems.map((item) => (
+              <ProductCartItem key={item.productId} product={item} />
+            ))}
           </Row>
         </Col>
+        <Col span={22} sm={11} lg={8} style={{ paddingLeft: '48px' }}>
+          <Payment totalPrice={totalPrice} totalProducts={cartItems?.length}/>
+        </Col>
       </Row>
-    </>
+    </Col>
+  </Row>
   ) : (
     <div className="cart--no-items">
       <p>Giỏ hàng của bạn còn trống</p>

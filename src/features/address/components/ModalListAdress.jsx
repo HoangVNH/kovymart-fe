@@ -1,4 +1,4 @@
-import { Modal, Row } from 'antd';
+import { Button, Modal, Row } from 'antd';
 import CardAddress from './CardAddress';
 import ButtonUI from '../../../components/UIKit/ButtonUI';
 import { Link } from 'react-router-dom';
@@ -16,7 +16,6 @@ const ModalListAddress = ({ setVisibility, visible }) => {
         setVisibility(false)
     }
 
-
     return (
         <Modal
             title="Danh sách địa chỉ"
@@ -24,8 +23,20 @@ const ModalListAddress = ({ setVisibility, visible }) => {
             onOk={handleOk}
             onCancel={handleCancel}
             footer={[
-                <ButtonUI text="Quay lại" variant="light" key="back" onClick={handleCancel} />,
-                <ButtonUI text="Xác nhận" key="submit" onClick={handleOk} />
+                <Button
+                  style={{ marginRight: '8px' }}
+                  htmlType="button"
+                  onClick={handleCancel}
+                >
+                  Quay lại
+                </Button>,
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  onClick={handleOk}
+                >
+                  Xác nhận
+                </Button>
             ]}
         >
             {list_address && list_address.length > 0 ?

@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button, Card } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
 import ImageWithFallBack from "../ImageWithFallback";
@@ -11,13 +11,13 @@ const ProductCard = ({
   smallImage,
   name,
   price,
-  discount,
   className,
   style,
   onAddToCart,
 }) => {
   return (
-    <div
+    <Card
+      hoverable
       className={`product-card__wrapper ${className}`}
       style={style}
     >
@@ -26,7 +26,7 @@ const ProductCard = ({
           <ImageWithFallBack src={smallImage} alt={name} />
         </div>
       </Link>
-      <Link to={`/product/${id}`}>
+      <Link to={`/product/${id}`} style={{ flex: '1 0 auto' }}>
         <p className="product-card__name">{name}</p>
       </Link>
       <div className="product-card__price">
@@ -39,7 +39,7 @@ const ProductCard = ({
           Thêm vào giỏ
         </Button>
       </div>
-    </div>
+    </Card>
   );
 };
 

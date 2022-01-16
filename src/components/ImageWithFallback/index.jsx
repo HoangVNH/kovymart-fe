@@ -16,7 +16,11 @@ function ImageWithFallBack({ src, ...props }) {
 }
 
 ImageWithFallBack.propTypes = {
-  src: PropTypes.string.isRequired,
+  src: PropTypes.string,
+};
+
+ImageWithFallBack.defaultProps = {
+  src: "",
 };
 
 export default ImageWithFallBack;

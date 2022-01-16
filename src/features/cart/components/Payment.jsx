@@ -1,6 +1,5 @@
 import { Row, Col, Typography } from "antd";
 import Utils from "../../../components/UIKit/Utils";
-import ButtonUI from "../../../components/UIKit/ButtonUI";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import { NotifyHelper } from "../../../helpers/notify-helper";
@@ -10,7 +9,7 @@ import React, { useCallback } from "react";
 
 const { Text } = Typography;
 
-const Payment = ({ totalPrice }) => {
+const Payment = ({ totalPrice, totalProducts }) => {
   const navigate = useNavigate();
 
   const handlePayment = useCallback(() => {
@@ -27,8 +26,8 @@ const Payment = ({ totalPrice }) => {
   }, [navigate]);
 
   return (
-    <div className="border shadow-sm rounded-2 py-5 px-4 sticky-payment-form">
-      <Row className="mb-3">
+    <div className="border shadow-sm rounded-2 sticky-payment-form cart-detail__payment">
+      {/* <Row className="mb-3">
         <Col xs={12} sm={24} md={12} span={12}>
           <Text strong>Tạm tính:</Text>
         </Col>
@@ -41,7 +40,7 @@ const Payment = ({ totalPrice }) => {
         >
           <Text>{Utils.Money({ money: totalPrice })}</Text>
         </Col>
-      </Row>
+      </Row> */}
       {/* <Row className="mb-3">
         <Col xs={12} sm={24} md={12} span={12}>
           <Text strong>Phí vận chuyển:</Text>
@@ -56,10 +55,10 @@ const Payment = ({ totalPrice }) => {
           <Text>{Utils.Money({ money: fee.shipping })}</Text>
         </Col>
       </Row> */}
-      <Row>
-        <Col xs={12} sm={24} md={12} span={12}>
-          <Text strong> Tổng tiền:</Text>
-        </Col>
+      <Row style={{ flex: '1 0 auto', marginBottom: '16px' }}>
+        <span>
+          <Text strong> Tổng thanh toán ({totalProducts} sản phẩm)</Text>
+        </span>
         <Col
           xs={12}
           sm={24}
@@ -67,11 +66,16 @@ const Payment = ({ totalPrice }) => {
           span={12}
           className="d-flex justify-content-end align-items-end"
         >
-          <Text>{Utils.Money({ money: totalPrice + fee.shipping })}</Text>
+          <Text></Text>
         </Col>
       </Row>
-      <div className="text-center mt-5">
-        <ButtonUI text="Thanh toán" onClick={handlePayment} />
+      <div className="cart-detail__checkout">
+        <button
+          className="n-btn"
+          onClick={handlePayment}
+        >
+          {Utils.Money({ money: totalPrice + fee.shipping })} - Mua hàng
+        </button>
       </div>
     </div>
   );
@@ -79,10 +83,12 @@ const Payment = ({ totalPrice }) => {
 
 Payment.propTypes = {
   totalPrice: PropTypes.number,
+  totalProducts: PropTypes.number
 };
 
 Payment.defaultProps = {
   totalPrice: 0,
+  totalProducts: 0
 };
 
 export default Payment;
