@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ProductCardList from "../../components/ProductCardList";
 import "./styles.scss";
 import CircleCategory from "../../components/CircleCategory";
-import { Pagination } from 'swiper';
+import { Pagination, Navigation } from 'swiper';
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/scss/grid";
 import "swiper/scss/pagination";
@@ -37,13 +37,14 @@ const HomePage = () => {
           Danh mục sản phẩm
         </div>
         <Swiper
-          modules={[Pagination]}
+          modules={[Pagination, Navigation]}
           pagination={{
             clickable: true
           }}
+          navigation
           slidesPerView={6}
           onSlideChange={() => console.log('slide change')}
-          onSwiper={(swiper) => console.log(swiper)}
+          // onSwiper={(swiper) => console.log(swiper)}
         >
           {categories.map((category) => (
             <SwiperSlide key={category.id} className="category-list__item-wrapper">
