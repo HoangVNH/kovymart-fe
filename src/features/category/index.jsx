@@ -1,18 +1,25 @@
 import { useParams } from "react-router-dom";
 import ButtonUI from "../../components/UIKit/ButtonUI";
-import Utils from "../../components/UIKit/Utils";
 import { useDispatch, useSelector } from "react-redux";
 import {
   sortCategory,
   getProductsPagination,
   selectProducts,
-  selectPagination,
-  selectCategory,
+  selectCategoryDetails,
   getCategoryById,
+  selectIsRequestingCategory,
+  selectIsRequestingProducts,
+  removeDataWhenUnmounting
 } from "./categorySlice";
 import { useState, useEffect } from "react";
+import { Row, Col, Typography, Select, Spin } from "antd";
+import { isValidArray } from "../../helpers/common";
+import { NotFoundComponent } from "../../components/NotFound";
+import ProductCard from "../../components/ProductCard";
+import { useCallback } from "react";
+import { modifyProduct } from "../../helpers/common";
+import { addProductToCart } from "../cart/cartSlice";
 import ProductCardList from "../../components/ProductCardList";
-import { Row, Col, Typography, Select } from "antd";
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -21,22 +28,18 @@ const Category = () => {
   const { categoryId } = useParams();
   const dispatch = useDispatch();
   const [selected, setSelected] = useState("incrementPrice");
-  const requesting = useSelector((state) => state.category.requesting);
-  const finished = useSelector((state) => state.category.pagination.finished);
   const products = useSelector(selectProducts);
-  const pagination = useSelector(selectPagination);
-  const category = useSelector(selectCategory);
+  // const pagination = useSelector(selectPagination);
+  const categoryDetails = useSelector(selectCategoryDetails);
+  const isRequestingCategory = useSelector(selectIsRequestingCategory);
+  const isRequestingProducts = useSelector(selectIsRequestingProducts);
 
-  const { name: categoryName } = category;
+  const { name: categoryName } = categoryDetails;
 
   const layout = {
-    gutter: { xs: 4, xl: 8 },
-    span: { xs: 24, sm: 12, lg: 8, xl: 6 },
+    gutter: [16, 24],
+    span: { xs: 6 },
   };
-
-  function handleLoadmore() {
-    dispatch(getProductsPagination({ categoryId, page: pagination + 1 }));
-  }
 
   function handleSelect() {
     dispatch(sortCategory({ selected }));
@@ -50,9 +53,16 @@ const Category = () => {
     dispatch(getProductsPagination({ categoryId, page: 1 }));
   }, [dispatch, categoryId]);
 
+  useEffect(() => {
+    return () => {
+      dispatch(removeDataWhenUnmounting());
+    }
+  }, [dispatch]);
+
   return (
-    <>
-      {products.length > 0 && (
+    (isRequestingCategory || isRequestingProducts) ? <Spin /> :
+    isValidArray(products) && categoryName ? (
+      <>
         <Row className="mt-3 me-5" type="flex" justify="end">
           <Col xs={12} md={8} xl={6}>
             <Title level={5}>Sắp xếp sản phẩm </Title>
@@ -72,37 +82,19 @@ const Category = () => {
             </Row>
           </Col>
         </Row>
-      )}
-      <Row type="flex" justify="center" className="mt-5">
+      <Row className="mt-5">
         <Col span={22}>
           {products && categoryName && (
-            <>
-              <ProductCardList
-                products={products}
-                title={categoryName}
-                layout={layout}
-              />
-              <Row type="flex" justify="center">
-                {requesting ? (
-                  <> {Utils.Loading()} </>
-                ) : (
-                  <>
-                    {" "}
-                    {!finished && (
-                      <ButtonUI
-                        className="mb-5"
-                        text="Xem thêm"
-                        onClick={handleLoadmore}
-                      />
-                    )}
-                  </>
-                )}
-              </Row>
-            </>
+            <ProductCardList
+              products={products}
+              title={categoryName}
+              layout={layout}
+            />
           )}
         </Col>
       </Row>
-    </>
+      </>
+    ) : <NotFoundComponent />
   );
 };
 

@@ -6,17 +6,18 @@ import { useDispatch } from "react-redux";
 import ProductCard from "../../components/ProductCard";
 import "./styles.scss";
 import { useNavigate } from 'react-router-dom';
+import { modifyProduct } from "../../helpers/common"; 
 
 const ProductCardList = ({ catId, products, title, layout, className, style, isHomepage = false }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const modifyProduct = useCallback((product, quantity) => {
-    const modifiedProduct = { ...product, quantity, productId: product.id };
-    delete modifiedProduct["id"];
+  // const modifyProduct = useCallback((product, quantity) => {
+  //   const modifiedProduct = { ...product, quantity, productId: product.id };
+  //   delete modifiedProduct["id"];
 
-    return modifiedProduct;
-  }, []);
+  //   return modifiedProduct;
+  // }, []);
 
   const handleAddToCart = useCallback(
     (product, quantity = 1) => {
@@ -24,7 +25,7 @@ const ProductCardList = ({ catId, products, title, layout, className, style, isH
 
       dispatch(addProductToCart(modifiedProduct));
     },
-    [dispatch, modifyProduct]
+    [dispatch]
   );
 
   const handleNavigateToCategoryPage = useCallback(() => {
@@ -43,7 +44,7 @@ const ProductCardList = ({ catId, products, title, layout, className, style, isH
               Xem thêm
             </button>}
         </div>
-        <Row gutter={{ ...layout.gutter }} className="product-list__wrapper">
+        <Row gutter={layout.gutter} className="product-list__wrapper">
           {products.map((product) => (
             <Col
               {...layout.span}

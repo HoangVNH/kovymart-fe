@@ -41,14 +41,14 @@
     }
 
     button.product-card__button {
-      color: #fff;
-      background-color: #e99667;
-      border-color: #e99667;
+      color: #0a8dd8;
+      background: #fff;
+      border-color: #0a8dd8;
       border-radius: 30px;
 
+
       &:hover {
-        background-color: #fff;
-        color: #e99667;
+        opacity: 0.7;
       }
 
       > span {

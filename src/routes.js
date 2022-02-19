@@ -8,6 +8,7 @@ import Address from './features/address';
 import Order from "./features/order";
 import OrderSuccess from './features/order/pages/OrderSuccess';
 import SearchResult from './features/search';
+import PageNotFound from "./components/NotFound";
 
 const routes = [
   {
@@ -50,10 +51,15 @@ const routes = [
     path: `/product`,
     component: SearchResult,
   },
+  {
+    key: uuidv4(),
+    path: '*',
+    component: <PageNotFound />
+  }
 ];
 
-const mappedRoutes = routes.map(({ path, element, key}) => (
-  <Route exact path={path} element={element} key={key} />
+const mappedRoutes = routes.map(({ path, element, key }) => (
+  <Route path={path} element={element} key={key} />
 ));
 
 export default mappedRoutes;

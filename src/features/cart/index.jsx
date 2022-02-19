@@ -14,6 +14,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { checkAuth } from "../../helpers/auth";
+import EmptyCartIcon from '../../assets/images/empty-cart.svg';
 const { confirm } = Modal;
 
 const Cart = () => {
@@ -90,7 +91,12 @@ const Cart = () => {
   </Row>
   ) : (
     <div className="cart--no-items">
-      <p>Giỏ hàng của bạn còn trống</p>
+      <img src={EmptyCartIcon} alt="Empty cart"/>
+      <div className='not-found-page__heading' />
+      <div className='not-found-page__content'>
+        Chưa có sản phẩm trong giỏ hàng
+      </div>
+      <div className='not-found-page__heading' />
       <ButtonUI
         variant="success"
         text="Tiếp tục mua hàng"

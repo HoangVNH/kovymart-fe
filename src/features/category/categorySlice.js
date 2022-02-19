@@ -4,11 +4,11 @@ import categoryApi from "../../apis/categoryApis";
 import { NotifyHelper } from "../../helpers/notify-helper";
 
 const initialState = {
-  requesting: false,
-  success: false,
+  isRequestingCategory: false,
+  isRequestingProducts: false,
   message: null,
-  list_products: [],
-  category_detail: {
+  products: [],
+  categoryDetails: {
     id: 0,
     name: "",
     description: "",
@@ -47,6 +47,15 @@ const initialState = {
     },
     {
       id: 3,
+      name: "Gia Vị - Đồ Khô",
+      description: "",
+      image: "https://image.cooky.vn/ads/s320/1459e7e9-0d7f-4812-a74b-edebc92d9950.jpeg",
+      isDelete: false,
+      createdAt: "2021-08-11T00:10:38.438Z",
+      updatedAt: "2021-08-11T00:10:38.438Z"
+    },
+    {
+      id: 4,
       name: "Thịt - Hải sản - Trứng",
       description: "",
       image: "https://image.cooky.vn/ads/s320/e7728abb-2f5c-4e3e-8a7e-ee8d9bfab13a.png",
@@ -55,25 +64,7 @@ const initialState = {
       updatedAt: "2021-08-11T00:10:26.629Z"
     },
     {
-      id: 4,
-      name: "Gia Vị",
-      description: "",
-      image: "https://image.cooky.vn/ads/s320/1459e7e9-0d7f-4812-a74b-edebc92d9950.jpeg",
-      isDelete: false,
-      createdAt: "2021-08-11T00:10:38.438Z",
-      updatedAt: "2021-08-11T00:10:38.438Z"
-    },
-    {
       id: 5,
-      name: "Đồ Tươi",
-      description: "",
-      image: "https://image.cooky.vn/ads/s320/7a9252a4-ac13-437f-9ec5-7321963ef691.png",
-      isDelete: false,
-      createdAt: "2021-08-11T00:10:45.096Z",
-      updatedAt: "2021-08-11T00:10:45.096Z"
-    },
-    {
-      id: 6,
       name: "Sữa",
       description: "",
       image: "https://image.cooky.vn/ads/s320/26d4fb05-a828-4292-a8b4-4e7a10e3722d.png",
@@ -82,7 +73,7 @@ const initialState = {
       updatedAt: "2021-08-11T00:10:52.148Z"
     },
     {
-      id: 7,
+      id: 6,
       name: "Đồ uống",
       description: "",
       image: "https://image.cooky.vn/ads/s320/ac8d4890-4838-429f-8b9e-a8532a1df6cb.png",
@@ -90,23 +81,24 @@ const initialState = {
       createdAt: "2021-08-11T00:10:58.533Z",
       updatedAt: "2021-08-11T00:10:58.533Z"
     },
+    
     {
       id: 8,
-      name: "Bánh Kẹo",
-      description: "",
-      image: "https://image.cooky.vn/ads/s320/8a2bac80-036d-4e0c-914d-17ac130c50ec.png",
-      isDelete: false,
-      createdAt: "2021-08-11T00:11:05.429Z",
-      updatedAt: "2021-08-11T00:11:05.429Z"
-    },
-    {
-      id: 9,
       name: "Hóa Phẩm",
       description: "",
       image: "https://image.cooky.vn/ads/s320/c74c6a42-95cd-4c5e-9632-c9a29b8f9c3d.png",
       isDelete: false,
       createdAt: "2021-08-11T00:11:12.334Z",
       updatedAt: "2021-08-11T00:11:12.334Z"
+    },
+    {
+      id: 9,
+      name: "Bánh Kẹo",
+      description: "",
+      image: "https://image.cooky.vn/ads/s320/8a2bac80-036d-4e0c-914d-17ac130c50ec.png",
+      isDelete: false,
+      createdAt: "2021-08-11T00:11:05.429Z",
+      updatedAt: "2021-08-11T00:11:05.429Z"
     },
     {
       id: 10,
@@ -116,7 +108,16 @@ const initialState = {
       isDelete: false,
       createdAt: "2021-08-11T00:11:12.334Z",
       updatedAt: "2021-08-11T00:11:12.334Z"
-    }
+    },
+    {
+      id: 11,
+      name: "Đồ Tươi",
+      description: "",
+      image: "https://image.cooky.vn/ads/s320/7a9252a4-ac13-437f-9ec5-7321963ef691.png",
+      isDelete: false,
+      createdAt: "2021-08-11T00:10:45.096Z",
+      updatedAt: "2021-08-11T00:10:45.096Z"
+    },
   ],
 };
 
@@ -156,20 +157,23 @@ const categorySlice = createSlice({
   name: "category",
   initialState: initialState,
   reducers: {
+    removeDataWhenUnmounting: (state) => {
+      state = initialState;
+    },
     sortCategory: (state, action) => {
       switch (action.payload.selected) {
         case "incrementPrice":
-          state.list_products.sort(
+          state.products.sort(
             (a, b) => parseFloat(a.price) - parseFloat(b.price)
           );
           break;
         case "decrementPrice":
-          state.list_products.sort(
+          state.products.sort(
             (a, b) => parseFloat(b.price) - parseFloat(a.price)
           );
           break;
         case "alphabet":
-          state.list_products.sort((a, b) => {
+          state.products.sort((a, b) => {
             if (a.productName < b.productName) return -1;
             if (a.productName > b.productName) return 1;
             return 0;
@@ -182,6 +186,10 @@ const categorySlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(getProductsPagination.pending, (state) => {
+        state.isRequestProducts = true;
+        state.products = [];
+      })
       .addCase(getProductsPagination.fulfilled, (state, action) => {
         if (action.payload.data.length === 0) {
           //check if loadmore is done
@@ -189,21 +197,26 @@ const categorySlice = createSlice({
           state.pagination.finished = true;
         } else {
           if (action.payload.data.page > 1) {
-            state.list_products = state.list_products.concat(
+            state.products = state.list_products.concat(
               action.payload.data
             );
           } else {
-            state.list_products = action.payload.data;
+            state.products = action.payload.data;
           }
           state.requesting = false;
           state.success = true;
         }
         state.pagination.page++;
+
+        state.isRequestingProducts = false;
+      })
+      .addCase(getCategoryById.pending, (state) => {
+        state.isRequestingCategory = true;
       })
       .addCase(getCategoryById.fulfilled, (state, action) => {
-        state.requesting = false;
-        state.success = true;
-        state.category_detail = action.payload;
+        state.isRequestingCategory = false;
+        state.categoryDetails = action.payload;
+
       })
       // .addCase(getCategoryList.pending, (state) => {
       //   state.requesting = true;
@@ -224,9 +237,14 @@ const categorySlice = createSlice({
   },
 });
 
-export const selectCategory = (state) => state.category.category_detail;
-export const selectProducts = (state) => state.category.list_products;
+export const selectCategoryDetails = (state) => state.category.categoryDetails;
+export const selectProducts = (state) => state.category.products;
 export const selectPagination = (state) => state.category.pagination.page;
 export const selectCategories = (state) => state.category.categories;
-export const { sortCategory } = categorySlice.actions;
+
+export const selectIsRequestingCategory = state => state.category.isRequestingCategory;
+export const selectIsRequestingProducts = state => state.category.isRequestingProducts;
+
+export const { sortCategory, removeDataWhenUnmounting } = categorySlice.actions;
+
 export default categorySlice.reducer;

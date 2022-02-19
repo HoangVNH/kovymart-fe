@@ -20,11 +20,8 @@ const HomePage = () => {
   const categories = useSelector(selectCategories);
   const { filteredProducts1, filteredProducts2, filteredProducts3 } = productData;
   const layout = {
-    gutter: [
-      { xs: 0, sm: 0, md: 24, lg: 32, xl: 32, xxl: 32 },
-      { xs: 16, sm: 16, md: 24, lg: 32, xl: 32, xxl: 32 }
-    ],
-    span: { xs: 24, sm: 24, md: 12, lg: 8, xl: 8, xxl: 5 },
+    gutter: [ 16, 24 ],
+    span: { xs: 6 },
   };
 
   const shouldRenderCategories = (categories) =>
@@ -95,7 +92,7 @@ const HomePage = () => {
       <div className="custom-divider" />
       <ProductCardList
         products={filteredProducts3 || [].slice(0, 4)}
-        title="Dầu ăn - Gia vị - Đồ khô"
+        title="Gia vị - Đồ khô"
         layout={layout}
         catId={3}
         isHomepage
