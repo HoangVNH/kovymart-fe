@@ -13,7 +13,7 @@ import Cart from "../../features/cart";
 import Address from "../../features/address";
 import Order from "../../features/order";
 import OrderSuccess from "../../features/order/pages/OrderSuccess";
-import SearchResult from '../../features/search';
+// import SearchResult from '../../features/search';
 import PageNotFound from '../../components/NotFound';
 
 const { Content } = Layout;
@@ -38,7 +38,7 @@ const MainLayout = () => {
               <Route path="/address" element={<Address />} />
               <Route path="/order" element={<Order />} />
               <Route path="/order-success" element={<OrderSuccess />} />
-              <Route path="/product" element={<SearchResult />} />
+              {/* <Route path="/product" element={<SearchResult />} /> */}
               <Route path="/order" element={<Order />} />
               <Route path="*" element={<PageNotFound />} />
             </Routes>

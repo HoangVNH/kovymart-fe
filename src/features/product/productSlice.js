@@ -3,7 +3,7 @@ import productApi from "../../apis/productApis";
 import { NotifyHelper } from "../../helpers/notify-helper";
 
 const initialState = {
-  requesting: false,
+  isRequesting: false,
   success: false,
   message: null,
   productList1: [],
@@ -37,7 +37,7 @@ const initialState = {
       isDelete: false,
       category: {
         id: 1,
-        name: "Rau Củ - Trái Cây",
+        name: "Rau Củ",
         description: "",
         image: "https://image.cooky.vn/ads/s320/39d51e75-05cd-4c5b-a3a0-082bdae74b63.png",
         isDelete: false,
@@ -63,7 +63,7 @@ const initialState = {
       price: 45465,
       unit: "kg",
       discount: 0,
-      categoryId: 2,
+      categoryId: 4,
       supplierId: 1,
       createdAt: "2021-08-12T01:45:58.817Z",
       updatedAt: "2021-08-12T01:45:58.817Z",
@@ -71,7 +71,7 @@ const initialState = {
       largeImage: "https://lh3.googleusercontent.com/rusSWS59bGwXTYnSRM6kwa0mz8jMvv3KFUGO2FXvvWCVZmeFhzzqOu8hpHCPf2WMpnqkOH5XPX0mKTd70qk0",
       isDelete: false,
       category: {
-        id: 2,
+        id: 4,
         name: "Thịt - Hải sản - Trứng",
         description: "",
         image: "https://image.cooky.vn/ads/s320/e7728abb-2f5c-4e3e-8a7e-ee8d9bfab13a.png",
@@ -107,7 +107,7 @@ const initialState = {
       isDelete: false,
       category: {
         id: 3,
-        name: "Gia Vị",
+        name: "Gia Vị - Đồ Khô",
         description: "",
         image: "https://image.cooky.vn/ads/s320/1459e7e9-0d7f-4812-a74b-edebc92d9950.jpeg",
         isDelete: false,
@@ -133,7 +133,7 @@ const initialState = {
       price: 34950,
       unit: "",
       discount: 0,
-      categoryId: 1,
+      categoryId: 2,
       supplierId: 8,
       createdAt: "2021-08-12T02:05:21.545Z",
       updatedAt: "2021-08-12T02:05:21.545Z",
@@ -141,8 +141,8 @@ const initialState = {
       largeImage: "https://lh3.googleusercontent.com/5-MTN9YjV5C49oBfMoAMZGo3OnaRNKDtWBHki2y99ANh8OzyG5pbsg4M7sTqDmi_et7-cKUF8hgNvmBSOJo",
       isDelete: false,
       category: {
-        id: 1,
-        name: "Rau Củ - Trái Cây",
+        id: 2,
+        name: "Trái Cây",
         description: "",
         image: "https://image.cooky.vn/ads/s320/39d51e75-05cd-4c5b-a3a0-082bdae74b63.png",
         isDelete: false,
@@ -168,7 +168,7 @@ const initialState = {
       price: 63960,
       unit: "",
       discount: 0,
-      categoryId: 2,
+      categoryId: 4,
       supplierId: 1,
       createdAt: "2021-08-12T01:27:38.226Z",
       updatedAt: "2021-08-12T01:27:38.226Z",
@@ -176,7 +176,7 @@ const initialState = {
       largeImage: "https://lh3.googleusercontent.com/frNEki7SOCgRA-8-3aY1qCDmUFqr1ehmdreM_oc5a21hsihAtelO4H0H_Xi8r5pG2hZVmml3LBQYGNUtn1c",
       isDelete: false,
       category: {
-        id: 2,
+        id: 4,
         name: "Thịt - Hải sản - Trứng",
         description: "",
         image: "https://image.cooky.vn/ads/s320/e7728abb-2f5c-4e3e-8a7e-ee8d9bfab13a.png",
@@ -203,7 +203,7 @@ const initialState = {
       price: 123900,
       unit: "",
       discount: 0,
-      categoryId: 2,
+      categoryId: 4,
       supplierId: 1,
       createdAt: "2021-08-12T00:58:39.385Z",
       updatedAt: "2021-08-12T00:58:39.385Z",
@@ -211,7 +211,7 @@ const initialState = {
       largeImage: "https://lh3.googleusercontent.com/rusSWS59bGwXTYnSRM6kwa0mz8jMvv3KFUGO2FXvvWCVZmeFhzzqOu8hpHCPf2WMpnqkOH5XPX0mKTd70qk0",
       isDelete: false,
       category: {
-        id: 2,
+        id: 4,
         name: "Thịt - Hải sản - Trứng",
         description: "",
         image: "https://image.cooky.vn/ads/s320/e7728abb-2f5c-4e3e-8a7e-ee8d9bfab13a.png",
@@ -233,20 +233,20 @@ const initialState = {
     },
     {
       id: 27,
-      sku: "kg",
+      sku: "10015811",
       description: "Bánh tiramisu là món bánh nước ngoài mà từ lâu đã rất quen thuộc với hầu hết chúng ta, được hầu hết chúng ta sử dụng trong các dịp quan trọng nhưng chúng ta thật sự vẫn chưa tìm hiểu rõ nguồn gốc và ý nghĩa của những câu chuyện về tiramisu",
-      price: 1.1,
-      unit: "-1 ",
+      price: 6400,
+      unit: "Gói",
       discount: 0,
-      categoryId: 7,
+      categoryId: 21,
       supplierId: 2,
       createdAt: "2021-09-21T14:43:56.514Z",
       updatedAt: "2021-09-21T14:43:56.514Z",
-      smallImage: null,
-      largeImage: null,
+      smallImage: "https://cdn-crownx.winmart.vn/images/prod/162427299550810015811-G1-Loc-12-cuon-giay-ve-sinh-TOPLY--2-lop-.jpg",
+      largeImage: "https://cdn-crownx.winmart.vn/images/prod/162427299550810015811-G1-Loc-12-cuon-giay-ve-sinh-TOPLY--2-lop-.jpg",
       isDelete: false,
       category: {
-        id: 7,
+        id: 21,
         name: "Bánh Kẹo",
         description: "",
         image: "https://image.cooky.vn/ads/s320/8a2bac80-036d-4e0c-914d-17ac130c50ec.png",
@@ -264,7 +264,7 @@ const initialState = {
         updatedAt: "2021-08-11T00:15:37.820Z",
         isDelete: false
       },
-      productName: "Bánh Tiramisu"
+      productName: "Snack Toonies vị phô mai Orion gói 36g"
     },
     {
       id: 5,
@@ -273,7 +273,7 @@ const initialState = {
       price: 75900,
       unit: "",
       discount: 0,
-      categoryId: 1,
+      categoryId: 2,
       supplierId: 8,
       createdAt: "2021-08-12T02:02:39.732Z",
       updatedAt: "2021-08-12T02:02:39.732Z",
@@ -281,8 +281,8 @@ const initialState = {
       largeImage: "https://lh3.googleusercontent.com/3kfsyj0tRwVVEeMORIsfDBzNhXml4hPlybC2rzxCOj3N7sRl5Pgs9RJri3Hk6zxbizjWszGAv_fPQtNtuA",
       isDelete: false,
       category: {
-        id: 1,
-        name: "Rau Củ - Trái Cây",
+        id: 2,
+        name: "Trái Cây",
         description: "",
         image: "https://image.cooky.vn/ads/s320/39d51e75-05cd-4c5b-a3a0-082bdae74b63.png",
         isDelete: false,
@@ -317,7 +317,7 @@ const initialState = {
       isDelete: false,
       category: {
         id: 1,
-        name: "Rau Củ - Trái Cây",
+        name: "Rau Củ",
         description: "",
         image: "https://image.cooky.vn/ads/s320/39d51e75-05cd-4c5b-a3a0-082bdae74b63.png",
         isDelete: false,
@@ -413,7 +413,7 @@ const initialState = {
       price: 38000,
       unit: "",
       discount: 0,
-      categoryId: 2,
+      categoryId: 4,
       supplierId: 2,
       createdAt: "2021-08-12T02:32:52.613Z",
       updatedAt: "2021-08-12T02:32:52.613Z",
@@ -421,7 +421,7 @@ const initialState = {
       largeImage: "https://lh3.googleusercontent.com/L-Wd2w-iqsrPRQBrbJfwobHCifAAESB_k_tJlCEHtGq-SChb49ARA3QB7uyDLRjWvBDHsTmY8Ffci4KQitQU5agr9uAKK7UK",
       isDelete: false,
       category: {
-        id: 2,
+        id: 4,
         name: "Thịt - Hải sản - Trứng",
         description: "",
         image: "https://image.cooky.vn/ads/s320/e7728abb-2f5c-4e3e-8a7e-ee8d9bfab13a.png",
@@ -457,7 +457,7 @@ const initialState = {
       isDelete: false,
       category: {
         id: 3,
-        name: "Gia Vị",
+        name: "Gia Vị - Đồ Khô",
         description: "",
         image: "https://image.cooky.vn/ads/s320/1459e7e9-0d7f-4812-a74b-edebc92d9950.jpeg",
         isDelete: false,
@@ -492,7 +492,7 @@ const initialState = {
       isDelete: false,
       category: {
         id: 3,
-        name: "Gia Vị",
+        name: "Gia Vị - Đồ Khô",
         description: "",
         image: "https://image.cooky.vn/ads/s320/1459e7e9-0d7f-4812-a74b-edebc92d9950.jpeg",
         isDelete: false,
@@ -527,7 +527,7 @@ const initialState = {
       isDelete: false,
       category: {
         id: 3,
-        name: "Gia Vị",
+        name: "Gia Vị - Đồ Khô",
         description: "",
         image: "https://image.cooky.vn/ads/s320/1459e7e9-0d7f-4812-a74b-edebc92d9950.jpeg",
         isDelete: false,
@@ -739,11 +739,11 @@ const productSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getProductList.fulfilled, (state, action) => {
-        state.requesting = false;
+        state.isRequesting = false;
         state.list = action.payload;
       })
       .addCase(getProductsbySearch.fulfilled, (state, action) => {
-        state.requesting = false;
+        state.isRequesting = false;
         if (Array.isArray(action.payload?.data?.data) ) {
           state.list = action.payload?.data?.data
         }
@@ -753,10 +753,10 @@ const productSlice = createSlice({
 
       //---------------PENDING & REJECTION---------------
       .addMatcher(isPendingAction, (state) => {
-        state.requesting = true;
+        state.isRequesting = true;
       })
       .addMatcher(isRejectedAction, (state, action) => {
-        state.requesting = state.success = false;
+        state.isRequesting = state.success = false;
         state.message = action.error.message;
         NotifyHelper.error(action.error.message, "Yêu cầu thất bại!");
       });

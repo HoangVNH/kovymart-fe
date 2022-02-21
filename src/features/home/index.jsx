@@ -18,7 +18,13 @@ const HomePage = () => {
   const dispatch = useDispatch();
   const productData = useSelector(selectProduct);
   const categories = useSelector(selectCategories);
-  const { filteredProducts1, filteredProducts2, filteredProducts3 } = productData;
+  const { 
+    filteredProducts1,
+    filteredProducts2,
+    filteredProducts3,
+    filteredProducts4,
+    filteredProducts5
+  } = productData;
   const layout = {
     gutter: [ 16, 24 ],
     span: { xs: 6 },
@@ -70,21 +76,28 @@ const HomePage = () => {
     dispatch(getProductsByCategoryId({ catId: 3}));
   }, [dispatch]);
 
+  useEffect(() => {
+    dispatch(getProductsByCategoryId({ catId: 4}));
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getProductsByCategoryId({ catId: 5}));
+  }, [dispatch]);
+
   return (
     <>
       { renderCategoriesBlock(categories) }
       
       <ProductCardList
-        products={filteredProducts1 || [].slice(0, 2)}
+        products={filteredProducts1 || [].slice(0, 4)}
         title="Rau Củ"
         layout={layout}
         catId={1}
         isHomepage
       />
-      <div className="custom-divider" />
-       <ProductCardList
+      <ProductCardList
         products={filteredProducts2 || [].slice(0, 4)}
-        title="Thịt - Hải sản - Trứng"
+        title="Trái Cây"
         layout={layout}
         catId={2}
         isHomepage
@@ -96,7 +109,23 @@ const HomePage = () => {
         layout={layout}
         catId={3}
         isHomepage
-      /> 
+      />
+      <div className="custom-divider" />
+      <ProductCardList
+        products={filteredProducts4 || [].slice(0, 4)}
+        title="Thịt - Hải Sản"
+        layout={layout}
+        catId={4}
+        isHomepage
+      />
+      <div className="custom-divider" />
+       <ProductCardList
+        products={filteredProducts5 || [].slice(0, 4)}
+        title="Sữa"
+        layout={layout}
+        catId={5}
+        isHomepage
+      />
     </>
   );
 };

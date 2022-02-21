@@ -92,7 +92,7 @@ const initialState = {
       updatedAt: "2021-08-11T00:11:12.334Z"
     },
     {
-      id: 9,
+      id: 21,
       name: "Bánh Kẹo",
       description: "",
       image: "https://image.cooky.vn/ads/s320/8a2bac80-036d-4e0c-914d-17ac130c50ec.png",

@@ -15,10 +15,6 @@ import { useState, useEffect } from "react";
 import { Row, Col, Typography, Select, Spin } from "antd";
 import { isValidArray } from "../../helpers/common";
 import { NotFoundComponent } from "../../components/NotFound";
-import ProductCard from "../../components/ProductCard";
-import { useCallback } from "react";
-import { modifyProduct } from "../../helpers/common";
-import { addProductToCart } from "../cart/cartSlice";
 import ProductCardList from "../../components/ProductCardList";
 
 const { Title } = Typography;
