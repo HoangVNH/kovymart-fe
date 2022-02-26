@@ -5,7 +5,6 @@ import {
   Typography,
   Space,
   Divider,
-  Skeleton,
   Input,
   Form,
   Tag,
@@ -30,7 +29,7 @@ import {
   setMessageOrderToDefault,
   insertOrder,
 } from "./orderSlice";
-import { getCart } from "../../features/cart/cartSlice";
+import { getCart, selectTotalItemsInCart } from "../../features/cart/cartSlice";
 import { paymentId, ASYNC_STATUS } from "../../constants";
 import { NotifyHelper } from "../../helpers/notify-helper";
 
@@ -42,17 +41,18 @@ const Order = () => {
   const cart = useSelector((state) => state.cart);
   const default_address = useSelector(selectDefaultAddress);
   const order_message = useSelector(selectOrderMessage);
+  const totalItemsInCart = useSelector(selectTotalItemsInCart);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const isUserLoggedIn = checkAuth();
-    if (!isUserLoggedIn) {
+    if (!isUserLoggedIn || totalItemsInCart <= 0) {
       navigate("/");
     } else {
       dispatch(getAddressList());
       dispatch(getCart());
     }
-  }, [dispatch, navigate, cart.totalItems]);
+  }, [dispatch, navigate, totalItemsInCart]);
 
   const handleSubmit = (e) => {
     if (default_address.id) {
@@ -66,7 +66,7 @@ const Order = () => {
       dispatch(insertOrder(data));
     }
     else {
-      NotifyHelper.error('Vui lòng thêm địa chỉ', 'Yêu cầu thất bại');
+      NotifyHelper.error('Vui lòng thêm địa chỉ để đặt hàng', '');
     }
   };
 
@@ -98,8 +98,6 @@ const Order = () => {
       />
       <Col lg={14} xs={23}>
         <Card className="card-shadow border-3 px-4 pb-4">
-          {cart.totalItems > 0
-            ?
             <Form onFinish={handleSubmit}>
               <Row>
                 <Col span={24}>
@@ -148,7 +146,7 @@ const Order = () => {
                           </Row>
                           {/* Payment method */}
                           <Row>
-                            <Col md={5} xs={10}></Col>
+                            <Col md={5} xs={10} />
                             <Col>
                               <Tag color="blue">Thanh toán bằng tiền mặt</Tag>
                             </Col>
@@ -159,11 +157,9 @@ const Order = () => {
                           {Object.keys(default_address).length === 0
                             ? <>
                               <Text strong> Vui lòng thêm địa chỉ để tiến hành thanh toán</Text>
-
                             </>
                             : null
                           }
-                          <Skeleton />
                         </>
                       )}
                     </Col>
@@ -174,16 +170,17 @@ const Order = () => {
                             <ButtonUI
                               htmlType="button"
                               variant="light"
-                              text="Thêm địa chỉ" />
+                              text="Thêm địa chỉ"
+                            />
                           </Link>
                         </>
                         : <ButtonUI
-                          className="float-right"
-                          text="Thay đổi"
-                          variant="light"
-                          htmlType="button"
-                          onClick={handleChangeAddress}
-                        />
+                            className="float-right"
+                            text="Thay đổi"
+                            variant="light"
+                            htmlType="button"
+                            onClick={handleChangeAddress}
+                          />
                       }
                     </Col>
                   </Row>
@@ -248,24 +245,18 @@ const Order = () => {
                       Quay lại
                     </Button>
                   </Link>
-                  {default_address ? (
+                  {
+                    default_address &&
                     <Button
                       type="primary"
                       htmlType="submit"
                     >
                       Xác nhận thanh toán
                     </Button>
-                  ) : null}
+                  }
                 </Row>
               </Col>
             </Form>
-            : (
-              <>
-                <Skeleton />
-                <Text strong type="secondary">Đơn hàng trống, vui lòng thêm sản phẩm vào đơn hàng.</Text>
-              </>
-            )
-          }
         </Card>
       </Col>
     </Row>

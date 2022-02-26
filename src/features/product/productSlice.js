@@ -3,14 +3,20 @@ import productApi from "../../apis/productApis";
 import { NotifyHelper } from "../../helpers/notify-helper";
 
 const initialState = {
-  isRequesting: false,
+  isFetching: false,
   success: false,
   message: null,
+  products: [],
   productList1: [],
   productList2: [],
   productList3: [],
   productList4: [],
   productList5: [],
+  isFetchingProductList1:  false,
+  isFetchingProductList2:  false,
+  isFetchingProductList3:  false,
+  isFetchingProductList4:  false,
+  isFetchingProductList5:  false,
   filteredProducts: [],
   details: {
     id: 0,
@@ -340,15 +346,15 @@ const initialState = {
       id: 9,
       sku: "10010613",
       description: "<h2><strong>Giới thiệu sản phẩm Sữa tươi tiệt trùng ít đường TH True Milk hộp 110ml</strong></h2><h3><strong>Sữa tươi nguyên chất từ trang trại của TH</strong></h3><p><strong>Sữa tươi tiệt trùng ít đường TH True Milk hộp 110ml </strong>đạt tiêu chuẩn về hệ thống quản lý vệ sinh an toàn thực phẩm ISO 22000:2005 do tổ chức quốc tế BUREAU- VERITAS cấp. Sản phẩm được làm từ 100% sữa bò tươi.</p><p>Sản phẩm được chế biến trong quy trình hiện đại. Mỗi khâu sản xuất đều được giám sát chặt chẽ bởi hệ thống máy tính và con người. Tiếp đó, sản phẩm phải vượt qua bài kiểm tra chất lượng nghiêm ngặt. Tất cả đều với một mục đích mang đến một sản phẩm sữa ngon nhất, bổ dưỡng nhất, giá tốt nhất đến người tiêu dùng.</p><h3><strong>Đôi nét về thương hiệu</strong></h3><p>TH là viết tắt của True Happiness, có nghĩa là hạnh phúc đích thực. Ngay từ tên thương hiệu, những người lãnh đạo đã thể hiện mong muốn mang đến cho người tiêu dùng những sản phẩm sữa tốt nhất. Để từ đó, sản phẩm sữa cung cấp những dinh dưỡng tốt nhất cho người dùng. Giúp người tiêu dùng có cơ thể mạnh khỏe, nâng cao chất lượng cuộc sống và có cuộc sống tươi đẹp, hạnh phúc hơn.</p><p>Mọi lứa bò của trang trại TH đều được chăm sóc cẩn thận. Thức ăn chăn nuôi luôn được đảm bảo ở chất lượng tốt nhất. Mang đến chất lượng sữa tuyệt hảo nhất có thể. Thương hiệu TH đã dành được rất nhiều giải thưởng, chứng chỉ chứng nhận chất lượng sản phẩm. Tiêu biểu nhất đó là 3 lần giành được giải thưởng “Thương hiệu quốc gia” (Vietnam Value).</p><p><strong>Lưu ý:</strong></p><p><strong>- Hạn sử dụng thực tế quý khách vui lòng xem trên bao bì.</strong></p><p><strong>- Hình sản phẩm chỉ mang tính chất minh họa, hình bao bì của sản phẩm tùy thời điểm sẽ khác so với thực tế.</strong></p>",
-      price: 34500,
+      price: 21600,
       unit: "",
       discount: 0,
       categoryId: 5,
       supplierId: 9,
       createdAt: "2021-08-12T02:28:18.674Z",
       updatedAt: "2021-08-12T02:28:18.674Z",
-      smallImage: "https://lh3.googleusercontent.com/2uHQ26t330GLfqagFGyMcU54C90g16GPB6laJ8DcgZ0xT1S-S-7sZ2l3ZTyYI3iQrRFkvtFzsFju9W54qftM=w185",
-      largeImage: "https://lh3.googleusercontent.com/2uHQ26t330GLfqagFGyMcU54C90g16GPB6laJ8DcgZ0xT1S-S-7sZ2l3ZTyYI3iQrRFkvtFzsFju9W54qftM",
+      smallImage: "https://cdn-crownx.winmart.vn/images/prod/162427310103110010612-G4-Sua-tuoi-tiet-trung-guyon-Chat-TH-True-Milk-hop-220ml.jpg",
+      largeImage: "https://cdn-crownx.winmart.vn/images/prod/162427310385310010607-G4-Loc-4-hop-sua-tuoi-tiet-trung-TH-True-Milk-ot-duong-180ml.jpg",
       isDelete: false,
       category: {
         id: 5,
@@ -685,14 +691,49 @@ const initialState = {
         isDelete: false
       },
       productName: "Sữa bột Abbott Ensure Gold ít ngọt hương vani 850g"
-    }
+    },
+    {
+      id: 31,
+      sku: "10054020",
+      description: "<h2> Bắp cải trắng </h2><p><img src=\"https://tmp.phongvu.vn/wp-content/uploads/2021/05/Bắp-cải-trắng-500g-e1621997971169.jpg\"></p><h3>Thông tin sản phẩm</h3><p>Bắp cải trắng hay còn được gọi là cải bắp trắng thuộc họ cải, nhóm 2 lá mầm, cây thân thảo, sống khoảng hai năm. Ở nước ta, cải bắp trắng xuất hiện nhiều ở Tây Nguyên, các tỉnh miền Trung và phía Bắc, được trồng chủ yếu trong vụ đông xuân.</p><p>Loại rau này có vị ngọt thanh đặc trưng, chứa nhiều chất chống oxy hóa, đặc biệt nhất là Sulforaphane – một chất có khả năng phá hủy được những tế bào gây nên bệnh ung thư. Ngoài ra, trong Bắp cải trắng còn có vitamin A, C và P. Nghiên cứu khoa học còn chứng minh được rằng phụ nữ ăn khoảng 4 – 5 bữa ăn có cải bắp trong tuần thì nguy cơ mắc bệnh ung thư vú sẽ giảm đến 74%.</p><p>Bắp cải trắng thì chúng ta có thể chế biến được rất nhiều món ăn siêu ngon như súp, xào, luộc…</p>",
+      price: 5490,
+      unit: "",
+      discount: 0,
+      categoryId: 1,
+      supplierId: 7,
+      createdAt: "2021-08-12T02:26:18.203Z",
+      updatedAt: "2021-08-12T02:26:18.203Z",
+      smallImage: "https://cdn-crownx.winmart.vn/images/prod/162428572368810054020-KG-Bap-non-200g.jpg",
+      largeImage: "https://cdn-crownx.winmart.vn/images/prod/162428572368810054020-KG-Bap-non-200g.jpg",
+      isDelete: false,
+      category: {
+        id: 1,
+        name: "Rau Củ",
+        description: "",
+        image: "https://image.cooky.vn/ads/s320/39d51e75-05cd-4c5b-a3a0-082bdae74b63.png",
+        isDelete: false,
+        createdAt: "2021-08-11T00:10:09.199Z",
+        updatedAt: "2021-08-11T00:10:09.199Z"
+      },
+      supplier: {
+        id: 7,
+        name: "Nông sản nội địa",
+        email: "nongsannoidia@gmail.com",
+        phone: "123456789",
+        address: "227 Nguyễn Văn Cừ, phường 4, quận 5",
+        createdAt: "2021-08-11T00:16:53.035Z",
+        updatedAt: "2021-08-11T00:16:53.035Z",
+        isDelete: false
+      },
+      productName: "Bắp cải trắng"
+    },
   ],
   pagination: {},
 };
 
 //----------ACTIONS----------
 export const getProductList = createAsyncThunk(
-  "product/getProductList",
+  "products/getProductList",
   async () => {
     const response = await productApi.getProductList();
     return response.data;
@@ -700,13 +741,67 @@ export const getProductList = createAsyncThunk(
 );
 
 export const getProductsbySearch = createAsyncThunk(
-  "product/getProductsbySearch",
+  "products/getProductsbySearch",
   async (search) => {
     const res = await productApi.getProductsbySearch(search);
     if(res && res.data.totalCount > 0){
       return res;
     }
     return 0;
+  }
+);
+
+export const getProductByIdAsync = createAsyncThunk(
+  "products/getById",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await productApi.getProductById(id);  
+      return response.data;
+    } catch (err) {
+      let error = err;
+
+      if (!error.response) {
+        throw err;
+      }
+
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const getProductByCategoryAsync = createAsyncThunk(
+  'products/getByCategory',
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await productApi.getProductsByCategoryId(id);
+      return response.data;
+    } catch (err) {
+      let error = err;
+
+      if (!error.response) {
+        throw err;
+      }
+
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const getProductByCategorySingleAsync = createAsyncThunk(
+  'products/getByCategorySingle',
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await productApi.getProductsByCategoryId(id);
+      return response.data;
+    } catch (err) {
+      let error = err;
+
+      if (!error.response) {
+        throw err;
+      }
+
+      return rejectWithValue(error.response.data);
+    }
   }
 );
 
@@ -739,11 +834,59 @@ const productSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getProductList.fulfilled, (state, action) => {
-        state.isRequesting = false;
+        state.isFetching = false;
         state.list = action.payload;
       })
+      .addCase(getProductByIdAsync.pending, (state) => {
+        state.isFetching = true;
+      })
+      .addCase(getProductByIdAsync.fulfilled, (state, { payload }) => {
+        state.isFetching = false;
+        state.details = payload;
+      })
+      .addCase(getProductByIdAsync.rejected, (state, action) => {
+        if (action.payload) {
+          state.error = action.payload.errorMessage;
+        } else {
+          state.error = action.error.message;
+        }
+         state.isFetching = false;
+      })
+      .addCase(getProductByCategoryAsync.pending, (state, {meta}) => {
+        state[`isFetchingProductList${meta.arg}`] = true;
+      })
+      .addCase(getProductByCategoryAsync.fulfilled, (state, { meta, payload }) => {
+        state[`isFetchingProductList${meta.arg}`] = false;
+        state[`productList${meta.arg}`] = payload.data;
+      })
+      .addCase(getProductByCategoryAsync.rejected, (state, {meta, payload, error}) => {
+        if (payload) {
+          state.error = payload.errorMessage;
+        } else {
+          state.error = error.message;
+        }
+        state[`isFetchingProductList${meta.arg}`] = false;
+      })
+      .addCase(getProductByCategorySingleAsync.pending, (state) => {
+        state.isFetching = true;
+      })
+      .addCase(getProductByCategorySingleAsync.fulfilled, (state, { payload }) => {
+        state.isFetching = false;
+        state.products = payload.data;
+      })
+      .addCase(getProductByCategorySingleAsync.rejected, (state, {payload, error}) => {
+        if (payload) {
+          state.error = payload.errorMessage;
+        } else {
+          state.error = error.message;
+        }
+        state.isFetching = false;
+      })
+      // .addCase(getProductByIdAsync.pending, (state) => {
+      //   state.isFetching = true;
+      // })
       .addCase(getProductsbySearch.fulfilled, (state, action) => {
-        state.isRequesting = false;
+        state.isFetching = false;
         if (Array.isArray(action.payload?.data?.data) ) {
           state.list = action.payload?.data?.data
         }
@@ -753,19 +896,31 @@ const productSlice = createSlice({
 
       //---------------PENDING & REJECTION---------------
       .addMatcher(isPendingAction, (state) => {
-        state.isRequesting = true;
+        state.isFetching = true;
       })
       .addMatcher(isRejectedAction, (state, action) => {
-        state.isRequesting = state.success = false;
+        state.isFetching = state.success = false;
         state.message = action.error.message;
         NotifyHelper.error(action.error.message, "Yêu cầu thất bại!");
       });
   },
 });
 
-export const { setDataToEmpty, getProductsByCategoryId, getProductById } = productSlice.actions;
+export const { setDataToEmpty, getProductById } = productSlice.actions;
 
 export const selectProduct = (state) => state.product;
+
+export const selectProducts = (state) => state.product.products;
 export const selectProductDetails = (state) => state.product.details;
+
+export const selectIsFetching = (state) => state.product.isFetching;
+
+export const selectIsFetching2 = (state) => state.product.isFetchingProductList2;
+
+export const selectIsFetching3 = (state) => state.product.isFetchingProductList3;
+
+export const selectIsFetching4 = (state) => state.product.isFetchingProductList4;
+
+export const selectIsFetching5 = (state) => state.product.isFetchingProductList5;
 
 export default productSlice.reducer;

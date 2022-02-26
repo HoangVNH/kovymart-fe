@@ -7,6 +7,7 @@ import 'antd/dist/antd.css';
 import 'swiper/scss';
 import './assets/css/index.css';
 import './assets/scss/index.scss';
+import 'react-loading-skeleton/dist/skeleton.css'
 import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(

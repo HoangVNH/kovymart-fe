@@ -24,6 +24,7 @@ import {
 } from '../location/locationSlice'
 import { insertAddress, selectAddressMessage, setDefaultAddressMessage } from "./addressSlice"
 import { ASYNC_STATUS } from "../../constants"
+import { selectTotalItemsInCart } from "../cart/cartSlice"
 
 const { Title } = Typography
 const { Option } = Select
@@ -35,6 +36,7 @@ const AddAddress = () => {
   const provinces = useSelector(selectProvinces)
   const districts = useSelector(selectDistricts)
   const address_message = useSelector(selectAddressMessage)
+  const totalItemsInCart = useSelector(selectTotalItemsInCart);
   const wards = useSelector(selectWards)
   const navigate = useNavigate()
   const [form] = Form.useForm()
@@ -43,17 +45,17 @@ const AddAddress = () => {
   const [disableLocation, setDisableLocation] = useState({
       disableDistricts: true,
       disableWards: true
-  })
+  });
 
   useEffect(() => {
       const isUserLoggedIn = checkAuth();
 
-      if (!isUserLoggedIn) {
+      if (!isUserLoggedIn || totalItemsInCart <= 0) {
         navigate("/");
       } else {
         dispatch(getProvinces());
       }
-  }, [navigate, dispatch])
+  }, [navigate, dispatch, totalItemsInCart])
 
   useEffect(() => {
     if (address_message === ASYNC_STATUS.SUCCESS) {

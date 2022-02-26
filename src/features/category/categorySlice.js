@@ -5,7 +5,6 @@ import { NotifyHelper } from "../../helpers/notify-helper";
 
 const initialState = {
   isRequestingCategory: false,
-  isRequestingProducts: false,
   message: null,
   products: [],
   categoryDetails: {
@@ -81,7 +80,15 @@ const initialState = {
       createdAt: "2021-08-11T00:10:58.533Z",
       updatedAt: "2021-08-11T00:10:58.533Z"
     },
-    
+    {
+      id: 7,
+      name: "Bánh Kẹo",
+      description: "",
+      image: "https://image.cooky.vn/ads/s320/8a2bac80-036d-4e0c-914d-17ac130c50ec.png",
+      isDelete: false,
+      createdAt: "2021-08-11T00:11:05.429Z",
+      updatedAt: "2021-08-11T00:11:05.429Z"
+    },
     {
       id: 8,
       name: "Hóa Phẩm",
@@ -90,15 +97,6 @@ const initialState = {
       isDelete: false,
       createdAt: "2021-08-11T00:11:12.334Z",
       updatedAt: "2021-08-11T00:11:12.334Z"
-    },
-    {
-      id: 21,
-      name: "Bánh Kẹo",
-      description: "",
-      image: "https://image.cooky.vn/ads/s320/8a2bac80-036d-4e0c-914d-17ac130c50ec.png",
-      isDelete: false,
-      createdAt: "2021-08-11T00:11:05.429Z",
-      updatedAt: "2021-08-11T00:11:05.429Z"
     },
     {
       id: 10,
@@ -216,7 +214,14 @@ const categorySlice = createSlice({
       .addCase(getCategoryById.fulfilled, (state, action) => {
         state.isRequestingCategory = false;
         state.categoryDetails = action.payload;
-
+      })
+      .addCase(getCategoryById.rejected, (state, {payload, error}) => {
+        if (payload) {
+          state.error = payload.errorMessage;
+        } else {
+          state.error = error.message;
+        }
+        state.isRequestingCategory = false;
       })
       // .addCase(getCategoryList.pending, (state) => {
       //   state.requesting = true;
@@ -243,7 +248,6 @@ export const selectPagination = (state) => state.category.pagination.page;
 export const selectCategories = (state) => state.category.categories;
 
 export const selectIsRequestingCategory = state => state.category.isRequestingCategory;
-export const selectIsRequestingProducts = state => state.category.isRequestingProducts;
 
 export const { sortCategory, removeDataWhenUnmounting } = categorySlice.actions;
 

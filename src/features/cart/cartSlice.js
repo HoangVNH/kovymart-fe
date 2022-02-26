@@ -122,4 +122,6 @@ export const selectCartItems = (state) => state.cart.items;
 export const selectIsCartFetching = (state) => state.cart.isFetching;
 export const selectTotalPrice = (state) => state.cart.totalPrice;
 
+export const selectTotalItemsInCart = (state) => state.cart?.totalItems;
+
 export default cartSlice.reducer;

@@ -1,6 +1,6 @@
 import Payment from "./components/Payment";
 import ProductCartItem from "./components/ProductCartItem";
-import { Col, Row, Modal } from "antd";
+import { Col, Row, Modal, Button } from "antd";
 import ButtonUI from "../../components/UIKit/ButtonUI";
 import "./styles.scss";
 import { useSelector, useDispatch } from "react-redux";
@@ -97,13 +97,15 @@ const Cart = () => {
         Chưa có sản phẩm trong giỏ hàng
       </div>
       <div className='not-found-page__heading' />
-      <ButtonUI
-        variant="success"
-        text="Tiếp tục mua hàng"
+      <Button
+        type="primary"
+        htmlType="button"
         onClick={() => {
           navigate("/");
         }}
-      />
+      >
+        Tiếp tục mua hàng
+      </Button>
     </div>
   );
 };
