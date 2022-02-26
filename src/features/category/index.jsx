@@ -12,10 +12,11 @@ import {
   removeDataWhenUnmounting
 } from "./categorySlice";
 import { useState, useEffect } from "react";
-import { Row, Col, Typography, Select, Spin } from "antd";
+import { Row, Col, Typography, Select } from "antd";
 import { isValidArray } from "../../helpers/common";
 import { NotFoundComponent } from "../../components/NotFound";
 import ProductCardList from "../../components/ProductCardList";
+import CustomizedSpin from "../../components/Spin";
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -56,7 +57,7 @@ const Category = () => {
   }, [dispatch]);
 
   return (
-    (isRequestingCategory || isRequestingProducts) ? <Spin /> :
+    (isRequestingCategory || isRequestingProducts) ? <CustomizedSpin /> :
     isValidArray(products) && categoryName ? (
       <>
         <Row className="mt-3 me-5" type="flex" justify="end">

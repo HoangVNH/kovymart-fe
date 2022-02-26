@@ -10,12 +10,15 @@ import ImageWithFallBack from "../../../../components/ImageWithFallback";
 import Utils from "../../../../components/UIKit/Utils";
 import {
   getProductById,
+  getProductByIdAsync,
   selectProductDetails,
+  selectIsFetching
 } from "../../productSlice";
 import { useDispatch, useSelector } from "react-redux";
 import ReactHtmlParser from "react-html-parser";
 import { addProductToCart } from "../../../cart/cartSlice";
 import Quantity from "../../../../components/Quantity";
+import Skeleton from 'react-loading-skeleton'
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
@@ -23,7 +26,7 @@ const ProductDetails = () => {
   const productDetails = useSelector(selectProductDetails);
   const [quantity, setQuantity] = useState(1);
 
-  const { productName, price, description, discount, largeImage } =
+  const { name, price, description, discount, largeImage } =
     productDetails;
   const { Text } = Typography;
 
@@ -61,8 +64,8 @@ const ProductDetails = () => {
   };
 
   useEffect(() => {
-    if (Number(productId) > 0) {
-      dispatch(getProductById({ productId }));
+    if (Number(productId)) {
+      dispatch(getProductByIdAsync(productId));
     }
   }, [dispatch, productId]);
 
@@ -75,14 +78,14 @@ const ProductDetails = () => {
       >
         <Row>
           <Col lg={12} className="pe-5">
-            <ImageWithFallBack
+            { largeImage ? <ImageWithFallBack
               className="rounded"
               src={largeImage}
-              alt={productName}
-            />
+              alt={name}
+            /> : <Skeleton />}
           </Col>
           <Col lg={12} className="px-2">
-            <h1 className="product-details__name"> {productName}</h1>
+            <h1 className="product-details__name"> {name}</h1>
             <div className="text-wrap lh-1 mb-3">
               <span className="product-details__price">
                 {Utils.Money({ money: price })}
@@ -95,7 +98,7 @@ const ProductDetails = () => {
                 </Text>
               </> : null}
             </div>
-            <Quantity 
+            <Quantity
               quantity={quantity} 
               onDecrease={handleDecrease}
               onIncrease={handleIncrease}
@@ -115,7 +118,7 @@ const ProductDetails = () => {
         <Row className="mt-5">
           <Col lg={16}>
             <div className="mt-4">
-              <div>{ReactHtmlParser(description)}</div>
+              <div className="product-details__description">{ReactHtmlParser(description)}</div>
             </div>
           </Col>
         </Row>

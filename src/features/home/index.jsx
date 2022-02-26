@@ -89,14 +89,14 @@ const HomePage = () => {
       { renderCategoriesBlock(categories) }
       
       <ProductCardList
-        products={filteredProducts1 || [].slice(0, 4)}
+        products={filteredProducts1?.slice(0, 4) || []}
         title="Rau Củ"
         layout={layout}
         catId={1}
         isHomepage
       />
       <ProductCardList
-        products={filteredProducts2 || [].slice(0, 4)}
+        products={filteredProducts2?.slice(0, 4) || []}
         title="Trái Cây"
         layout={layout}
         catId={2}
@@ -104,7 +104,7 @@ const HomePage = () => {
       />
       <div className="custom-divider" />
       <ProductCardList
-        products={filteredProducts3 || [].slice(0, 4)}
+        products={filteredProducts3?.slice(0, 4) || []}
         title="Gia vị - Đồ khô"
         layout={layout}
         catId={3}
@@ -112,7 +112,7 @@ const HomePage = () => {
       />
       <div className="custom-divider" />
       <ProductCardList
-        products={filteredProducts4 || [].slice(0, 4)}
+        products={filteredProducts4?.slice(0, 4) || []}
         title="Thịt - Hải Sản"
         layout={layout}
         catId={4}
@@ -120,7 +120,7 @@ const HomePage = () => {
       />
       <div className="custom-divider" />
        <ProductCardList
-        products={filteredProducts5 || [].slice(0, 4)}
+        products={filteredProducts5?.slice(0, 4) || []}
         title="Sữa"
         layout={layout}
         catId={5}

@@ -78,4 +78,11 @@ img.ant-image-preview-img {
       justify-content: center;
     }
   }
+
+  &__description {
+    // padding: 12px 20px;
+    line-height: 20px;
+    text-align: justify;
+    font-size: 14px;
+  }
 }

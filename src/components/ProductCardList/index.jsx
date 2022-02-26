@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import ProductCard from "../../components/ProductCard";
 import "./styles.scss";
 import { useNavigate } from 'react-router-dom';
-import { modifyProduct } from "../../helpers/common"; 
+import { isValidArray, modifyProduct } from "../../helpers/common"; 
 
 const ProductCardList = ({ catId, products, title, layout, className, style, isHomepage = false }) => {
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ const ProductCardList = ({ catId, products, title, layout, className, style, isH
   }, [navigate, catId]);
 
   return (
-    <>
+    isValidArray(products) ? 
       <div className="product-list__container">
         <div className={`product-list__header ${className}`} style={style}>
           <span>{title}</span>
@@ -62,8 +62,7 @@ const ProductCardList = ({ catId, products, title, layout, className, style, isH
             </Col>
           ))}
         </Row>
-      </div>
-    </>
+      </div> : null
   );
 };
 
