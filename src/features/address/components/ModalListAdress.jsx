@@ -8,48 +8,54 @@ import { PlusOutlined } from '@ant-design/icons';
 import PropTypes from "prop-types";
 
 const ModalListAddress = ({ setVisibility, visible }) => {
-    const list_address = useSelector(selectAddressList)
-    const handleOk = () => {
-        setVisibility(false)
-    }
-    const handleCancel = () => {
-        setVisibility(false)
-    }
+  const list_address = useSelector(selectAddressList)
+  const handleOk = () => {
+    setVisibility(false)
+  }
+  const handleCancel = () => {
+    setVisibility(false)
+  }
 
-    return (
-        <Modal
-            title="Danh sách địa chỉ"
-            visible={visible}
-            onOk={handleOk}
-            onCancel={handleCancel}
-            footer={[
-                <Button
-                  style={{ marginRight: '8px' }}
-                  htmlType="button"
-                  onClick={handleCancel}
-                >
-                  Quay lại
-                </Button>,
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  onClick={handleOk}
-                >
-                  Xác nhận
-                </Button>
-            ]}
+  return (
+    <Modal
+      title="Danh sách địa chỉ"
+      visible={visible}
+      onOk={handleOk}
+      onCancel={handleCancel}
+      footer={[
+        <Button
+          style={{ marginRight: '8px' }}
+          htmlType="button"
+          onClick={handleCancel}
         >
-            {list_address && list_address.length > 0 ?
-                <>{list_address.map((item) => {
-                    return <CardAddress key={item.id} address={item} />
-                })} </> : null}
-            <Row className="mt-5" type="flex" justify="end">
-                <Link to="/address">
-                    <ButtonUI withIcon={<PlusOutlined />} variant="light" text="Thêm địa chỉ" />
-                </Link>
-            </Row>
-        </Modal>
-    )
+          Quay lại
+        </Button>,
+        <Button
+          type="primary"
+          htmlType="submit"
+          onClick={handleOk}
+        >
+          Xác nhận
+        </Button>
+        // <ButtonUI
+        //   variant="success"
+        //   text="Xác nhận"
+        //   htmlType="submit"
+        //   onClick={handleOk}
+        // />
+      ]}
+    >
+      {list_address && list_address.length > 0 ?
+          <>{list_address.map((item) => {
+              return <CardAddress key={item.id} address={item} />
+          })} </> : null}
+        <Row className="mt-5" type="flex" justify="end">
+          <Link to="/address">
+            <ButtonUI withIcon={<PlusOutlined />} variant="light" text="Thêm địa chỉ" />
+          </Link>
+        </Row>
+    </Modal>
+  )
 }
 
 ModalListAddress.propTypes = {

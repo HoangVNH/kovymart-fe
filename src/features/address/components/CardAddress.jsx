@@ -1,4 +1,4 @@
-import { Card, Row, Col, Typography, Modal, Tag } from 'antd'
+import { Card, Row, Col, Typography, Modal, Tag, Button } from 'antd'
 import ButtonUI from '../../../components/UIKit/ButtonUI'
 import { setDefaultAddress, deleteAddress, selectDefaultAddress } from '../addressSlice'
 import { useDispatch, useSelector } from 'react-redux'
@@ -80,10 +80,19 @@ const CardAddress = (props) => {
                 <Tag className="mt-3" color="orange">Địa chỉ mặc định</Tag>
                 :
                 <Row className="mt-5" type="flex" justify="center">
-                    <ButtonUI className="mx-1 my-1" variant="light" text="Đặt làm mặc định"
-                        onClick={handleSetDefault}
+                    <Button
+                      className="mx-1 my-1"
+                      type='primary'
+                      onClick={handleSetDefault}
+                    >
+                      Đặt làm mặc định
+                    </Button>
+                    <ButtonUI
+                      className="mx-1 my-1"
+                      variant="danger"
+                      text="Xóa"
+                      onClick={handleDelete}
                     />
-                    <ButtonUI className="mx-1 my-1" variant="danger" text="Xóa" onClick={handleDelete} />
                 </Row>
             }
         </Card>

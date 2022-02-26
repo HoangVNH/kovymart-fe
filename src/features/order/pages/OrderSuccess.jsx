@@ -43,7 +43,7 @@ const OrderSuccess = () => {
                   block={true}
                   size="large"
                 >
-                  Xác nhận
+                  Tiếp tục mua hàng
                 </Button>
               </Link>
             </Col>
