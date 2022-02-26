@@ -5,6 +5,7 @@ import ImageWithFallBack from "../ImageWithFallback";
 import PropTypes from "prop-types";
 import Utils from "../UIKit/Utils";
 import "./styles.scss";
+import Skeleton from "react-loading-skeleton";
 
 const ProductCard = ({
   id,
@@ -14,6 +15,7 @@ const ProductCard = ({
   className,
   style,
   onAddToCart,
+  isFetching
 }) => {
   return (
     <Card
@@ -23,19 +25,27 @@ const ProductCard = ({
     >
       <Link to={`/product/${id}`}>
         <div className="product-card__image">
-          <ImageWithFallBack src={smallImage} alt={name} />
+          {
+            isFetching ?
+            <Skeleton height={310} /> :
+            <ImageWithFallBack src={smallImage} alt={name} />
+          }
         </div>
       </Link>
       <Link to={`/product/${id}`} style={{ flex: '1 0 auto' }}>
-        <p className="product-card__name">{name}</p>
+        <p className="product-card__name">{ isFetching ? <Skeleton /> : name}</p>
       </Link>
       <div className="product-card__price">
         <div className="product-card__price--left">
           <span className="product-card__net-price">
-            {Utils.Money({ money: price })}
+            { isFetching ? <Skeleton /> : Utils.Money({ money: price })}
           </span>
         </div>
-        <Button className="product-card__button" onClick={onAddToCart}>
+        <Button
+          className="product-card__button"
+          onClick={onAddToCart}
+          disabled={isFetching}
+        >
           Thêm vào giỏ
         </Button>
       </div>
@@ -44,11 +54,20 @@ const ProductCard = ({
 };
 
 ProductCard.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string
+  ]),
   name: PropTypes.string.isRequired,
   smallImage: PropTypes.string,
-  price: PropTypes.number.isRequired,
-  discount: PropTypes.number,
+  price: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string
+  ]) ,
+  discount: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string
+  ]),
   className: PropTypes.string,
   style: PropTypes.shape({}),
   onAddToCart: PropTypes.func.isRequired,

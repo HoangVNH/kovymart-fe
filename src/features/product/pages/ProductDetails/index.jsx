@@ -9,7 +9,6 @@ import { useParams } from "react-router-dom";
 import ImageWithFallBack from "../../../../components/ImageWithFallback";
 import Utils from "../../../../components/UIKit/Utils";
 import {
-  getProductById,
   getProductByIdAsync,
   selectProductDetails,
   selectIsFetching
@@ -24,6 +23,7 @@ const ProductDetails = () => {
   const dispatch = useDispatch();
   const { productId } = useParams();
   const productDetails = useSelector(selectProductDetails);
+  const isFetching = useSelector(selectIsFetching);
   const [quantity, setQuantity] = useState(1);
 
   const { name, price, description, discount, largeImage } =
@@ -77,24 +77,35 @@ const ProductDetails = () => {
         xs={23}
       >
         <Row>
-          <Col lg={12} className="pe-5">
-            { largeImage ? <ImageWithFallBack
-              className="rounded"
-              src={largeImage}
-              alt={name}
-            /> : <Skeleton />}
+          <Col lg={10} className="pe-5">
+            { 
+              isFetching ? <Skeleton height={195} /> : 
+              <ImageWithFallBack
+                className="rounded"
+                src={largeImage}
+                alt={name}
+              /> 
+            }
           </Col>
-          <Col lg={12} className="px-2">
-            <h1 className="product-details__name"> {name}</h1>
+          <Col lg={12} className="px-3">
+            <h1 className="product-details__name">
+              {
+                isFetching ? <Skeleton /> : name
+              }
+            </h1>
             <div className="text-wrap lh-1 mb-3">
               <span className="product-details__price">
-                {Utils.Money({ money: price })}
+                { 
+                  isFetching ? <Skeleton /> : Utils.Money({ money: price })
+                }
               </span>
-              { discount > 0 ? 
+              { !isFetching && discount > 0 ?
               <>
                 <br />
                 <Text delete type="secondary">
-                  {Utils.Money({ money: price * (1 + discount * 0.01) })}
+                  {
+                    isFetching ? <Skeleton /> : Utils.Money({ money: price * (1 + discount * 0.01) })
+                  }
                 </Text>
               </> : null}
             </div>
@@ -102,15 +113,20 @@ const ProductDetails = () => {
               quantity={quantity} 
               onDecrease={handleDecrease}
               onIncrease={handleIncrease}
+              isLoading={isFetching}
             />
             <br />
             <button
               className="product-details__add-to-cart-btn"
               onClick={() => handleAddToCart(productDetails, quantity)}
+              disabled={isFetching}
             >
               <PlusOutlined /> Thêm vào giỏ
             </button>
-            <button className="product-details__buy-now-btn" >
+            <button
+              className="product-details__buy-now-btn"
+              disabled={isFetching}
+            >
               Mua ngay
             </button>
           </Col>
@@ -118,7 +134,11 @@ const ProductDetails = () => {
         <Row className="mt-5">
           <Col lg={16}>
             <div className="mt-4">
-              <div className="product-details__description">{ReactHtmlParser(description)}</div>
+              <div
+                className="product-details__description"
+              >
+                { isFetching ? <Skeleton count={5}/> : ReactHtmlParser(description)}
+              </div>
             </div>
           </Col>
         </Row>

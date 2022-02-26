@@ -5,7 +5,6 @@ import { NotifyHelper } from "../../helpers/notify-helper";
 
 const initialState = {
   isRequestingCategory: false,
-  isRequestingProducts: false,
   message: null,
   products: [],
   categoryDetails: {
@@ -215,7 +214,14 @@ const categorySlice = createSlice({
       .addCase(getCategoryById.fulfilled, (state, action) => {
         state.isRequestingCategory = false;
         state.categoryDetails = action.payload;
-
+      })
+      .addCase(getCategoryById.rejected, (state, {payload, error}) => {
+        if (payload) {
+          state.error = payload.errorMessage;
+        } else {
+          state.error = error.message;
+        }
+        state.isRequestingCategory = false;
       })
       // .addCase(getCategoryList.pending, (state) => {
       //   state.requesting = true;
@@ -242,7 +248,6 @@ export const selectPagination = (state) => state.category.pagination.page;
 export const selectCategories = (state) => state.category.categories;
 
 export const selectIsRequestingCategory = state => state.category.isRequestingCategory;
-export const selectIsRequestingProducts = state => state.category.isRequestingProducts;
 
 export const { sortCategory, removeDataWhenUnmounting } = categorySlice.actions;
 

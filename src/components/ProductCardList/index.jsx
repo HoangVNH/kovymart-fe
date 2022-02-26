@@ -1,4 +1,4 @@
-import { Col, Row } from "antd";
+import { Col, Row, Skeleton } from "antd";
 import { addProductToCart } from "../../features/cart/cartSlice";
 import PropTypes from "prop-types";
 import React, { useCallback } from "react";
@@ -7,8 +7,19 @@ import ProductCard from "../../components/ProductCard";
 import "./styles.scss";
 import { useNavigate } from 'react-router-dom';
 import { isValidArray, modifyProduct } from "../../helpers/common"; 
+import { NotFoundComponent } from "../NotFound";
 
-const ProductCardList = ({ catId, products, title, layout, className, style, isHomepage = false }) => {
+const ProductCardList = ({
+  isFetching,
+  isFetchingCategory,
+  catId,
+  products,
+  title,
+  layout,
+  className,
+  style,
+  isHomepage = false
+  }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -33,12 +44,12 @@ const ProductCardList = ({ catId, products, title, layout, className, style, isH
   }, [navigate, catId]);
 
   return (
-    isValidArray(products) ? 
+    isValidArray(products) ?
       <div className="product-list__container">
         <div className={`product-list__header ${className}`} style={style}>
-          <span>{title}</span>
-          {isHomepage && 
-            <button 
+          <span>{ isFetchingCategory ? <Skeleton /> : title}</span>
+          {isHomepage &&
+            <button
               onClick={handleNavigateToCategoryPage}
             >
               Xem thêm
@@ -58,11 +69,12 @@ const ProductCardList = ({ catId, products, title, layout, className, style, isH
                 discount={product.discount}
                 onAddToCart={() => handleAddToCart(product)}
                 smallImage={product.smallImage}
+                isFetching={isFetching}
               />
             </Col>
           ))}
         </Row>
-      </div> : null
+      </div> : <NotFoundComponent />
   );
 };
 

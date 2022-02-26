@@ -6,6 +6,7 @@ const initialState = {
   isFetching: false,
   success: false,
   message: null,
+  products: [],
   productList1: [],
   productList2: [],
   productList3: [],
@@ -766,7 +767,43 @@ export const getProductByIdAsync = createAsyncThunk(
       return rejectWithValue(error.response.data);
     }
   }
-)
+);
+
+export const getProductByCategoryAsync = createAsyncThunk(
+  'products/getByCategory',
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await productApi.getProductsByCategoryId(id);
+      return response.data;
+    } catch (err) {
+      let error = err;
+
+      if (!error.response) {
+        throw err;
+      }
+
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const getProductByCategorySingleAsync = createAsyncThunk(
+  'products/getByCategorySingle',
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await productApi.getProductsByCategoryId(id);
+      return response.data;
+    } catch (err) {
+      let error = err;
+
+      if (!error.response) {
+        throw err;
+      }
+
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 //------------------------UTILITIES------------------------
 const isPendingAction = (action) =>
@@ -815,6 +852,36 @@ const productSlice = createSlice({
         }
          state.isFetching = false;
       })
+      .addCase(getProductByCategoryAsync.pending, (state, {meta}) => {
+        state[`isFetchingProductList${meta.arg}`] = true;
+      })
+      .addCase(getProductByCategoryAsync.fulfilled, (state, { meta, payload }) => {
+        state[`isFetchingProductList${meta.arg}`] = false;
+        state[`productList${meta.arg}`] = payload.data;
+      })
+      .addCase(getProductByCategoryAsync.rejected, (state, {meta, payload, error}) => {
+        if (payload) {
+          state.error = payload.errorMessage;
+        } else {
+          state.error = error.message;
+        }
+        state[`isFetchingProductList${meta.arg}`] = false;
+      })
+      .addCase(getProductByCategorySingleAsync.pending, (state) => {
+        state.isFetching = true;
+      })
+      .addCase(getProductByCategorySingleAsync.fulfilled, (state, { payload }) => {
+        state.isFetching = false;
+        state.products = payload.data;
+      })
+      .addCase(getProductByCategorySingleAsync.rejected, (state, {payload, error}) => {
+        if (payload) {
+          state.error = payload.errorMessage;
+        } else {
+          state.error = error.message;
+        }
+        state.isFetching = false;
+      })
       // .addCase(getProductByIdAsync.pending, (state) => {
       //   state.isFetching = true;
       // })
@@ -839,11 +906,21 @@ const productSlice = createSlice({
   },
 });
 
-export const { setDataToEmpty, getProductsByCategoryId, getProductById } = productSlice.actions;
+export const { setDataToEmpty, getProductById } = productSlice.actions;
 
 export const selectProduct = (state) => state.product;
+
+export const selectProducts = (state) => state.product.products;
 export const selectProductDetails = (state) => state.product.details;
 
 export const selectIsFetching = (state) => state.product.isFetching;
+
+export const selectIsFetching2 = (state) => state.product.isFetchingProductList2;
+
+export const selectIsFetching3 = (state) => state.product.isFetchingProductList3;
+
+export const selectIsFetching4 = (state) => state.product.isFetchingProductList4;
+
+export const selectIsFetching5 = (state) => state.product.isFetchingProductList5;
 
 export default productSlice.reducer;

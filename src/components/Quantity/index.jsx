@@ -11,13 +11,15 @@ const Quantity = ({
   onDecrease,
   onIncrease,
   quantity,
+  isLoading
 }) => {
   return (
     <div className={`group-quantity ${className}`}>
       <Button
         className="group-quantity__button decrease"
         onClick={onDecrease}
-        icon={<MinusOutlined /> }
+        icon={<MinusOutlined />}
+        disabled={isLoading}
       />
       <div className="value">
         {quantity}
@@ -26,6 +28,7 @@ const Quantity = ({
         className="group-quantity__button increase"
         onClick={onIncrease}
         icon={<PlusOutlined /> }
+        disabled={isLoading}
       />
     </div>
   )
