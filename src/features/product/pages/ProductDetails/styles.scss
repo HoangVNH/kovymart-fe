@@ -22,14 +22,17 @@ img.ant-image-preview-img {
   }
 
   &__add-to-cart-btn {
-    color: #0a8dd8;
+    color: #fff;
+    // border-color: #1890ff;
+    background: #1890ff;
+    // color: #0a8dd8;
     line-height: 17px;
     text-align: center;
-    background: #fff;
+    // background: #fff;
     outline: 0;
     padding: 0 25px;
     height: 54px;
-    border: 1px solid #0a8dd8;
+    border: 1px solid #1890ff;
     font-size: 14px;
     margin-right: 10px;
     border-radius: 2px;
