@@ -74,7 +74,7 @@ const Payment = ({ totalPrice, totalProducts }) => {
           className="n-btn"
           onClick={handlePayment}
         >
-          {Utils.Money({ money: totalPrice + fee.shipping })} - Mua hàng
+          {Utils.Money({ money: totalPrice })} - Mua hàng
         </button>
       </div>
     </div>

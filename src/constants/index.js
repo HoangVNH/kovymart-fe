@@ -7,7 +7,7 @@ export const ASYNC_STATUS = {
 export const paymentId = 1;
 
 export const fee = {
-  shipping: 18000,
+  shipping: 0,
 };
 
 export const quantity = {

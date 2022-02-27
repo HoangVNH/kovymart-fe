@@ -17,7 +17,6 @@ import { useNavigate, Link } from "react-router-dom";
 import { checkAuth } from "../../helpers/auth";
 import { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fee } from "../../constants";
 import ModalListAddress from "../../features/address/components/ModalListAdress";
 import {
   getAddressList,
@@ -58,7 +57,7 @@ const Order = () => {
     if (default_address.id) {
       const data = {
         note: e.note,
-        totalPrice: cart.totalPrice + fee.shipping,
+        totalPrice: cart.totalPrice,
         paymentId: paymentId,
         addressId: default_address.id,
         items: cart.items,
@@ -229,7 +228,7 @@ const Order = () => {
                     </Col>
                     <Col xs={10} md={8} className="align-end">
                       <Text strong>
-                        {Utils.Money({ money: cart.totalPrice + fee.shipping })}
+                        {Utils.Money({ money: cart.totalPrice })}
                       </Text>
                     </Col>
                   </Row>
