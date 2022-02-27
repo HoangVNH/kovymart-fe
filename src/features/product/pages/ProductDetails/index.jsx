@@ -33,11 +33,12 @@ const ProductDetails = () => {
   const modifyProduct = useCallback((product, quantity) => {
     const modifiedProduct = {
       ...product,
+      productName: product.name,
       quantity,
       productId: product.id,
     };
     delete modifiedProduct["id"];
-    delete modifiedProduct["name"];
+    // delete modifiedProduct["name"];
 
     return modifiedProduct;
   }, []);

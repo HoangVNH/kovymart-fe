@@ -23,12 +23,16 @@ const ProductCardList = ({
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // const modifyProduct = useCallback((product, quantity) => {
-  //   const modifiedProduct = { ...product, quantity, productId: product.id };
-  //   delete modifiedProduct["id"];
+  const modifyProduct = useCallback((product, quantity) => {
+    const modifiedProduct = {
+      ...product,
+      quantity,
+      productId: product.id,
+    };
+    delete modifiedProduct["id"];
 
-  //   return modifiedProduct;
-  // }, []);
+    return modifiedProduct;
+  }, []);
 
   const handleAddToCart = useCallback(
     (product, quantity = 1) => {
@@ -36,7 +40,7 @@ const ProductCardList = ({
 
       dispatch(addProductToCart(modifiedProduct));
     },
-    [dispatch]
+    [dispatch, modifyProduct]
   );
 
   const handleNavigateToCategoryPage = useCallback(() => {
